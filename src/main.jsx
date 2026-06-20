@@ -33,6 +33,7 @@ const sampleText =
 const ADMIN_PASSWORD = 'Mukilan@2009';
 const ADMIN_SESSION_KEY = 'learnito_admin_password';
 const WHATSAPP_PREMIUM_LINK = 'https://wa.me/message/6FSCTMUBFVESK1?src=qr';
+const ASSET_BASE = import.meta.env.BASE_URL;
 
 function App() {
   const [sourceText, setSourceText] = useState(sampleText);
@@ -287,7 +288,7 @@ function App() {
       <section className="workspace">
         <header className="topbar">
           <div className="brand-heading">
-            <img src="/learnito-logo.png" alt="Learnito AI logo" />
+            <img src={`${ASSET_BASE}learnito-logo.png`} alt="Learnito AI logo" />
             <div>
               <p className="eyebrow">PWA Study Tool</p>
               <h1>Learnito AI Study Notes Generator</h1>
@@ -416,7 +417,7 @@ function App() {
 
           {limitReached && (
             <div className="whatsapp-payment-card">
-              <img src="/whatsapp-qr.jpeg" alt="WhatsApp premium payment QR code" />
+              <img src={`${ASSET_BASE}whatsapp-qr.jpeg`} alt="WhatsApp premium payment QR code" />
               <h3>Free trial finished</h3>
               <p>You used 10 free note generations this month.</p>
               <p>Scan this WhatsApp QR to pay for premium and send your device ID for activation.</p>
@@ -568,7 +569,7 @@ function AdminPanel({ onBack, onUsageChange }) {
       <section className="admin-shell">
         <header className="admin-topbar">
           <div className="brand-heading">
-            <img src="/learnito-logo.png" alt="Learnito AI logo" />
+            <img src={`${ASSET_BASE}learnito-logo.png`} alt="Learnito AI logo" />
             <div>
               <p className="eyebrow">Admin</p>
               <h1>Premium dashboard</h1>
