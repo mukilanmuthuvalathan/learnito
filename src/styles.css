@@ -594,6 +594,40 @@ li p {
   margin-top: 0;
 }
 
+.contact-page {
+  align-items: center;
+  background: #f8fafc;
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 24px;
+}
+
+.contact-card {
+  background: #ffffff;
+  border: 1px solid #dbeafe;
+  border-radius: 8px;
+  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.08);
+  display: grid;
+  gap: 14px;
+  max-width: 560px;
+  padding: clamp(24px, 4vw, 42px);
+  text-align: center;
+  width: 100%;
+}
+
+.contact-card img {
+  border-radius: 8px;
+  justify-self: center;
+}
+
+.contact-card h1 {
+  font-size: clamp(2rem, 5vw, 3rem);
+}
+
+.contact-card .secondary-link {
+  justify-content: center;
+}
 .admin-page {
   background: #f8fafc;
   min-height: 100vh;
@@ -979,7 +1013,41 @@ li p {
     grid-template-columns: 1fr;
   }
 
-  .admin-page {
+  .contact-page {
+  align-items: center;
+  background: #f8fafc;
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 24px;
+}
+
+.contact-card {
+  background: #ffffff;
+  border: 1px solid #dbeafe;
+  border-radius: 8px;
+  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.08);
+  display: grid;
+  gap: 14px;
+  max-width: 560px;
+  padding: clamp(24px, 4vw, 42px);
+  text-align: center;
+  width: 100%;
+}
+
+.contact-card img {
+  border-radius: 8px;
+  justify-self: center;
+}
+
+.contact-card h1 {
+  font-size: clamp(2rem, 5vw, 3rem);
+}
+
+.contact-card .secondary-link {
+  justify-content: center;
+}
+.admin-page {
     padding: 18px;
   }
 

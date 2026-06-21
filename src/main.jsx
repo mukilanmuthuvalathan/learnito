@@ -33,6 +33,7 @@ const sampleText =
 const ADMIN_PASSWORD = 'Mukilan@2009';
 const ADMIN_SESSION_KEY = 'learnito_admin_password';
 const WHATSAPP_PREMIUM_LINK = 'https://wa.me/message/6FSCTMUBFVESK1?src=qr';
+const CONTACT_RECEIVED_PATH = '/contact-received';
 const ASSET_BASE = import.meta.env.BASE_URL;
 const LOGO_UI_SRC = `${ASSET_BASE}learnito-logo-small.png`;
 
@@ -53,7 +54,7 @@ function App() {
   const [installPrompt, setInstallPrompt] = useState(null);
   const [installReady, setInstallReady] = useState(false);
   const [installHelp, setInstallHelp] = useState('');
-  const [view, setView] = useState(() => (window.location.pathname === '/admin' ? 'admin' : 'app'));
+  const [view, setView] = useState(() => getViewFromPath());
   const limitReached = !usage.premiumActive && usage.count >= usage.limit;
 
   useEffect(() => {
@@ -70,7 +71,7 @@ function App() {
 
   useEffect(() => {
     function handlePopState() {
-      setView(window.location.pathname === '/admin' ? 'admin' : 'app');
+      setView(getViewFromPath());
     }
 
     window.addEventListener('popstate', handlePopState);
@@ -251,7 +252,8 @@ function App() {
   }
 
   function navigate(nextView) {
-    window.history.pushState({}, '', nextView === 'admin' ? '/admin' : '/');
+    const path = nextView === 'admin' ? '/admin' : nextView === 'contact' ? CONTACT_RECEIVED_PATH : '/';
+    window.history.pushState({}, '', path);
     setView(nextView);
   }
 
@@ -282,6 +284,10 @@ function App() {
 
   if (view === 'admin') {
     return <AdminPanel onBack={() => navigate('app')} onUsageChange={setUsage} />;
+  }
+
+  if (view === 'contact') {
+    return <ContactReceivedPage onBack={() => navigate('app')} />;
   }
 
   return (
@@ -497,6 +503,36 @@ function App() {
   );
 }
 
+function ContactReceivedPage({ onBack }) {
+  return (
+    <main className="contact-page">
+      <section className="contact-card">
+        <img
+          src={LOGO_UI_SRC}
+          alt="Learnito AI logo"
+          width="82"
+          height="82"
+          decoding="async"
+        />
+        <p className="eyebrow">Contact received</p>
+        <h1>Thank you for contacting Learnito</h1>
+        <p>
+          Your premium access request has been received. We will reply on WhatsApp with the next step.
+        </p>
+        <a className="premium-access-button" href={WHATSAPP_PREMIUM_LINK} rel="noreferrer" target="_blank">
+          Continue on WhatsApp
+        </a>
+        <button className="secondary-link" type="button" onClick={onBack}>Back to app</button>
+      </section>
+    </main>
+  );
+}
+
+function getViewFromPath() {
+  if (window.location.pathname === '/admin') return 'admin';
+  if (window.location.pathname === CONTACT_RECEIVED_PATH) return 'contact';
+  return 'app';
+}
 function AdminPanel({ onBack, onUsageChange }) {
   const [password, setPassword] = useState(() => sessionStorage.getItem(ADMIN_SESSION_KEY) || '');
   const [authorized, setAuthorized] = useState(() => Boolean(sessionStorage.getItem(ADMIN_SESSION_KEY)));
