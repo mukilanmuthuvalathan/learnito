@@ -34,7 +34,7 @@ const ADMIN_PASSWORD = 'Mukilan@2009';
 const ADMIN_SESSION_KEY = 'learnito_admin_password';
 const WHATSAPP_PREMIUM_LINK = 'https://wa.me/message/6FSCTMUBFVESK1?src=qr';
 const ASSET_BASE = import.meta.env.BASE_URL;
-const LOGO_UI_SRC = `${ASSET_BASE}learnito-logo-ui.png`;
+const LOGO_UI_SRC = `${ASSET_BASE}learnito-logo-small.png`;
 
 function App() {
   const [sourceText, setSourceText] = useState(sampleText);
