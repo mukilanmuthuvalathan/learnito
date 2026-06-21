@@ -6,7 +6,7 @@ const USAGE_KEY = 'learnito_usage';
 const PREMIUM_KEY = 'learnito_premium';
 const ADMIN_CODES_KEY = 'learnito_admin_codes';
 const PREMIUM_DEVICES_KEY = 'learnito_premium_devices';
-const VALID_DEMO_CODES = new Set(['LEARNITO-PRO', 'LEARNITO-2026', 'STUDY-PRO', 'TR-LEARNITO']);
+const VALID_DEMO_CODES = new Set();
 const DEVICE_CODE_PREFIX = 'LA';
 const DEVICE_CODE_SECRET = 'LEARNITO-DEVICE-PREMIUM-2026';
 
@@ -54,6 +54,10 @@ export function activatePremiumCode(code) {
 
   if (!VALID_DEMO_CODES.has(normalized) && normalized !== deviceCode && !storedCode) {
     return { ok: false, error: 'Premium code is invalid for this device.' };
+  }
+
+  if (storedCode && storedCode.deviceId !== deviceId) {
+    return { ok: false, error: 'Premium code is for another device.' };
   }
 
   if (storedCode && (!storedCode.active || storedCode.usedByDeviceId)) {
@@ -112,18 +116,25 @@ export function getAdminSnapshot() {
   };
 }
 
-export function createPremiumCode() {
+export function createPremiumCode(deviceId) {
+  const normalizedDeviceId = deviceId.trim();
+
+  if (!normalizedDeviceId) {
+    return { ok: false, error: 'Device ID is required.' };
+  }
+
   const code = {
     active: true,
-    code: createCode(),
+    code: createDevicePremiumCode(normalizedDeviceId),
     createdAt: new Date().toISOString(),
+    deviceId: normalizedDeviceId,
     expiresAt: new Date(Date.now() + PREMIUM_DAYS_MS).toISOString(),
     id: crypto.randomUUID ? crypto.randomUUID() : `code-${Date.now()}`,
     usedByDeviceId: null
   };
 
-  savePremiumCodes([code, ...getPremiumCodes()]);
-  return code;
+  savePremiumCodes([code, ...getPremiumCodes().filter((item) => item.deviceId !== normalizedDeviceId)]);
+  return { ok: true, code };
 }
 
 export function createDevicePremiumCode(deviceId) {
@@ -282,8 +293,4 @@ function hashCode(value) {
   }
 
   return `${first}${(secondHash >>> 0).toString(16).toUpperCase().padStart(8, '0')}`;
-}
-function createCode() {
-  const random = Math.random().toString(16).slice(2, 14).toUpperCase().padEnd(12, '0');
-  return `TR-${random}`;
 }

@@ -18,7 +18,6 @@ import {
 import './styles.css';
 import {
   activatePremiumCode,
-  createDevicePremiumCode,
   createPremiumCode,
   getAdminSnapshot,
   getOrCreateDeviceId,
@@ -451,7 +450,7 @@ function App() {
               id="premium-code"
               value={premiumCode}
               onChange={(event) => setPremiumCode(event.target.value)}
-              placeholder="TR-..."
+              placeholder="LA-..."
             />
             <button type="button" onClick={activatePremium}>Activate</button>
           </div>
@@ -605,8 +604,21 @@ function AdminPanel({ onBack, onUsageChange }) {
   }
 
   function createCode() {
-    createPremiumCode();
-    setMessage('Premium code created.');
+    const targetDeviceId = deviceId.trim() || (snapshot.devices.length === 1 ? snapshot.devices[0].deviceId : '');
+    const result = createPremiumCode(targetDeviceId);
+
+    if (!result.ok) {
+      setMessage('');
+      setGeneratedDeviceCode('');
+      setGeneratedActivationLink('');
+      setError(result.error);
+      return;
+    }
+
+    const activationLink = `${window.location.origin}/?premiumDevice=${encodeURIComponent(targetDeviceId)}&premiumKey=${encodeURIComponent(result.code.code)}`;
+    setGeneratedDeviceCode(result.code.code);
+    setGeneratedActivationLink(activationLink);
+    setMessage('One-device premium code created. It works only for this Device ID.');
     setError('');
     loadDashboard();
   }
@@ -622,12 +634,22 @@ function AdminPanel({ onBack, onUsageChange }) {
     }
 
     if (active) {
-      const code = createDevicePremiumCode(targetDeviceId);
+      const result = createPremiumCode(targetDeviceId);
+
+      if (!result.ok) {
+        setMessage('');
+        setGeneratedDeviceCode('');
+        setGeneratedActivationLink('');
+        setError(result.error);
+        return;
+      }
+
+      const code = result.code.code;
       const activationLink = `${window.location.origin}/?premiumDevice=${encodeURIComponent(targetDeviceId)}&premiumKey=${encodeURIComponent(code)}`;
       setGeneratedDeviceCode(code);
       setGeneratedActivationLink(activationLink);
       setError('');
-      setMessage('Activation link created. Send this link to the user. It works only on the same device.');
+      setMessage('One-device activation link created. Send this link to the user. It works only for this Device ID.');
 
       try {
         await navigator.clipboard?.writeText(activationLink);
@@ -710,12 +732,12 @@ function AdminPanel({ onBack, onUsageChange }) {
         <section className="admin-grid">
           <div className="admin-card">
             <div>
-              <p className="eyebrow">Premium codes</p>
-              <h2>Create code</h2>
+              <p className="eyebrow">One device access</p>
+              <h2>Create Device ID code</h2>
             </div>
             <button type="button" onClick={createCode}>
               <KeyRound size={18} />
-              Create code
+              Create code for Device ID
             </button>
           </div>
 
@@ -739,9 +761,10 @@ function AdminPanel({ onBack, onUsageChange }) {
             </div>
             {generatedActivationLink && (
               <div className="generated-code-box">
-                <span>Premium activation link</span>
+                <span>One-device premium link</span>
+                {generatedDeviceCode && <code>{generatedDeviceCode}</code>}
                 <strong>{generatedActivationLink}</strong>
-                <small>Send this link to the user. When they open it on the same device, premium activates automatically.</small>
+                <small>This code/link works only on the matching Device ID.</small>
               </div>
             )}
           </div>
@@ -755,7 +778,7 @@ function AdminPanel({ onBack, onUsageChange }) {
             snapshot.codes.map((code) => (
               <article className="code-row" key={code.id}>
                 <strong>{code.code}</strong>
-                <span>{code.active ? 'Active' : 'Inactive'}{code.usedByDeviceId ? ` - Used by ${code.usedByDeviceId}` : ''}</span>
+                <span>{code.active ? 'Active' : 'Inactive'}{code.deviceId ? ` - For ${code.deviceId}` : ''}{code.usedByDeviceId ? ` - Used by ${code.usedByDeviceId}` : ''}</span>
                 <small>{code.expiresAt ? `Expires ${new Date(code.expiresAt).toLocaleDateString()}` : 'No expiry'}</small>
               </article>
             ))
