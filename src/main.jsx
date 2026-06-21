@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+﻿import React, { useEffect, useMemo, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import {
   BookOpen,
@@ -288,18 +288,30 @@ function App() {
       <section className="workspace">
         <header className="topbar">
           <div className="brand-heading">
-            <img src={`${ASSET_BASE}learnito-logo.png`} alt="Learnito AI logo" />
+            <img
+              src={`${ASSET_BASE}learnito-logo.png`}
+              alt="Learnito AI logo"
+              width="82"
+              height="82"
+              decoding="async"
+              fetchPriority="high"
+            />
             <div>
               <p className="eyebrow">PWA Study Tool</p>
               <h1>Learnito AI Study Notes Generator</h1>
             </div>
           </div>
           <div className="topbar-actions">
-            <button className="install-button" type="button" onClick={installApp}>
+            <button
+              aria-label="Install Learnito app"
+              className="install-button"
+              type="button"
+              onClick={installApp}
+            >
               <MonitorDown size={17} />
               {installReady ? 'Install App' : 'Install'}
             </button>
-            <div className="status-pill">
+            <div className="status-pill" role="status" aria-live="polite">
               <CheckCircle2 size={16} />
               {status}
             </div>
@@ -569,7 +581,14 @@ function AdminPanel({ onBack, onUsageChange }) {
       <section className="admin-shell">
         <header className="admin-topbar">
           <div className="brand-heading">
-            <img src={`${ASSET_BASE}learnito-logo.png`} alt="Learnito AI logo" />
+            <img
+              src={`${ASSET_BASE}learnito-logo.png`}
+              alt="Learnito AI logo"
+              width="82"
+              height="82"
+              decoding="async"
+              fetchPriority="high"
+            />
             <div>
               <p className="eyebrow">Admin</p>
               <h1>Premium dashboard</h1>
@@ -628,7 +647,7 @@ function AdminPanel({ onBack, onUsageChange }) {
             snapshot.codes.map((code) => (
               <article className="code-row" key={code.id}>
                 <strong>{code.code}</strong>
-                <span>{code.active ? 'Active' : 'Inactive'}{code.usedByDeviceId ? ` · Used by ${code.usedByDeviceId}` : ''}</span>
+                <span>{code.active ? 'Active' : 'Inactive'}{code.usedByDeviceId ? ` Â· Used by ${code.usedByDeviceId}` : ''}</span>
                 <small>{code.expiresAt ? `Expires ${new Date(code.expiresAt).toLocaleDateString()}` : 'No expiry'}</small>
               </article>
             ))
@@ -729,3 +748,4 @@ function createNoteId() {
 }
 
 createRoot(document.getElementById('root')).render(<App />);
+
