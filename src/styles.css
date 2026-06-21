@@ -183,7 +183,7 @@ h2 {
 }
 
 .panel-header span {
-  color: #64748b;
+  color: #475569;
   font-weight: 700;
 }
 
@@ -336,7 +336,7 @@ textarea {
 .app-footer {
   align-items: center;
   border-top: 1px solid #e2e8f0;
-  color: #64748b;
+  color: #475569;
   display: flex;
   gap: 4px;
   grid-column: 1 / -1;
@@ -459,7 +459,7 @@ li p {
 }
 
 .note-count-meter span {
-  color: #64748b;
+  color: #475569;
   font-size: 0.85rem;
   font-weight: 800;
 }
@@ -646,7 +646,7 @@ li p {
 }
 
 .stat-card span {
-  color: #64748b;
+  color: #475569;
   display: block;
   font-weight: 800;
   margin-bottom: 8px;
@@ -708,10 +708,14 @@ li p {
 }
 
 .code-row {
+  background: #ffffff;
   border-bottom: 1px solid #e2e8f0;
+  color: #0f172a;
   display: grid;
   gap: 4px;
   padding: 16px 18px;
+  text-align: left;
+  width: 100%;
 }
 
 .code-row:last-child {
@@ -732,7 +736,7 @@ li p {
 
 .code-row span,
 .code-row small {
-  color: #64748b;
+  color: #475569;
 }
 
 .danger-zone {
@@ -828,7 +832,7 @@ li p {
 
 .note-card span,
 .muted {
-  color: #64748b;
+  color: #475569;
   font-size: 0.9rem;
 }
 

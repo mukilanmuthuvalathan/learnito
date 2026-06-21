@@ -36,22 +36,17 @@ const STOP_WORDS = new Set([
 ]);
 
 export async function generateStudyGuide(text) {
-  const { RunnableLambda } = await import('@langchain/core/runnables');
-  const studyGuideChain = RunnableLambda.from(async (input) => {
-    const sentences = splitSentences(input);
-    const keywords = extractKeywords(input);
-    const summary = buildSummary(sentences, keywords);
-    const concepts = extractConcepts(input, keywords).slice(0, 25);
-    const quiz = buildQuiz(concepts, sentences);
+  const sentences = splitSentences(text);
+  const keywords = extractKeywords(text);
+  const summary = buildSummary(sentences, keywords);
+  const concepts = extractConcepts(text, keywords).slice(0, 25);
+  const quiz = buildQuiz(concepts, sentences);
 
-    return {
-      summary: summary.length ? summary : ['Add more study material to generate a stronger summary.'],
-      concepts: concepts.length ? concepts : ['Core Ideas'],
-      quiz
-    };
-  });
-
-  return studyGuideChain.invoke(text);
+  return {
+    summary: summary.length ? summary : ['Add more study material to generate a stronger summary.'],
+    concepts: concepts.length ? concepts : ['Core Ideas'],
+    quiz
+  };
 }
 
 function splitSentences(text) {

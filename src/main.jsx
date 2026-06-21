@@ -1,4 +1,4 @@
-﻿import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import {
   BookOpen,
@@ -34,6 +34,7 @@ const ADMIN_PASSWORD = 'Mukilan@2009';
 const ADMIN_SESSION_KEY = 'learnito_admin_password';
 const WHATSAPP_PREMIUM_LINK = 'https://wa.me/message/6FSCTMUBFVESK1?src=qr';
 const ASSET_BASE = import.meta.env.BASE_URL;
+const LOGO_UI_SRC = `${ASSET_BASE}learnito-logo-ui.png`;
 
 function App() {
   const [sourceText, setSourceText] = useState(sampleText);
@@ -289,7 +290,7 @@ function App() {
         <header className="topbar">
           <div className="brand-heading">
             <img
-              src={`${ASSET_BASE}learnito-logo.png`}
+              src={LOGO_UI_SRC}
               alt="Learnito AI logo"
               width="82"
               height="82"
@@ -355,11 +356,11 @@ function App() {
             />
 
               <div className="actions">
-                <button onClick={handleGenerate} disabled={isGenerating}>
+                <button type="button" onClick={handleGenerate} disabled={isGenerating}>
                   {isGenerating ? <Loader2 className="spin" size={18} /> : <Sparkles size={18} />}
                   Generate
                 </button>
-                <button className="secondary" onClick={handleSave}>
+                <button className="secondary" type="button" onClick={handleSave}>
                   <Save size={18} />
                   Save offline
                 </button>
@@ -389,14 +390,14 @@ function App() {
               : `${usage.count}/${usage.limit} free generated notes used this month.`}
           </p>
 
-          {message && <p className="premium-message">{message}</p>}
-          {error && <p className="limit-alert">{error}</p>}
+          {message && <p className="premium-message" role="status" aria-live="polite">{message}</p>}
+          {error && <p className="limit-alert" role="alert">{error}</p>}
 
           <div className="device-box">
             <span>Your device ID</span>
             <div>
-              <input readOnly value={deviceId} />
-              <button type="button" onClick={copyDeviceId}>
+              <input id="device-id" aria-label="Your device ID" readOnly value={deviceId} />
+              <button className="copy-device-button" type="button" onClick={copyDeviceId} aria-label="Copy device ID">
                 <Copy size={16} />
                 {copied ? 'Copied' : 'Copy'}
               </button>
@@ -451,7 +452,7 @@ function App() {
             <p className="eyebrow">Offline Library</p>
             <h2>Saved notes</h2>
           </div>
-          <button className="icon-button" onClick={startNewNote} aria-label="Create note">
+          <button className="icon-button" type="button" onClick={startNewNote} aria-label="Create note">
             <Plus size={18} />
           </button>
         </div>
@@ -465,12 +466,13 @@ function App() {
                 className={note.id === activeNoteId ? 'note-card active' : 'note-card'}
                 key={note.id}
               >
-                <button onClick={() => openNote(note)}>
+                <button type="button" onClick={() => openNote(note)} aria-label={`Open ${note.title}`}>
                   <strong>{note.title}</strong>
                   <span>{new Date(note.updatedAt).toLocaleString()}</span>
                 </button>
                 <button
                   className="delete-button"
+                  type="button"
                   onClick={() => handleDelete(note.id)}
                   aria-label={`Delete ${note.title}`}
                 >
@@ -486,7 +488,7 @@ function App() {
           <strong>Mukilan Muthuvalathan</strong>
           <span>Founder &amp; CEO, Learnito</span>
         </div>
-        <button className="admin-link" onClick={() => navigate('admin')}>
+        <button className="admin-link" type="button" onClick={() => navigate('admin')}>
           <ShieldCheck size={17} />
           Admin
         </button>
@@ -570,7 +572,7 @@ function AdminPanel({ onBack, onUsageChange }) {
             />
             <button type="submit">Login</button>
           </form>
-          {error && <p className="limit-alert">{error}</p>}
+          {error && <p className="limit-alert" role="alert">{error}</p>}
         </section>
       </main>
     );
@@ -582,7 +584,7 @@ function AdminPanel({ onBack, onUsageChange }) {
         <header className="admin-topbar">
           <div className="brand-heading">
             <img
-              src={`${ASSET_BASE}learnito-logo.png`}
+              src={LOGO_UI_SRC}
               alt="Learnito AI logo"
               width="82"
               height="82"
@@ -594,12 +596,12 @@ function AdminPanel({ onBack, onUsageChange }) {
               <h1>Premium dashboard</h1>
             </div>
           </div>
-          <button className="secondary-link" onClick={onBack}>Back to app</button>
-          <button className="secondary-link" onClick={logout}>Logout</button>
+          <button className="secondary-link" type="button" onClick={onBack}>Back to app</button>
+          <button className="secondary-link" type="button" onClick={logout}>Logout</button>
         </header>
 
         {(message || error) && (
-          <p className={error ? 'limit-alert' : 'premium-message'}>{error || message}</p>
+          <p className={error ? 'limit-alert' : 'premium-message'} role="status" aria-live="polite">{error || message}</p>
         )}
 
         <section className="admin-stats">
@@ -614,7 +616,7 @@ function AdminPanel({ onBack, onUsageChange }) {
               <p className="eyebrow">Premium codes</p>
               <h2>Create code</h2>
             </div>
-            <button onClick={createCode}>
+            <button type="button" onClick={createCode}>
               <KeyRound size={18} />
               Create code
             </button>
@@ -627,12 +629,14 @@ function AdminPanel({ onBack, onUsageChange }) {
             </div>
             <div className="admin-device-field">
               <input
+                id="admin-device-id"
+                aria-label="Device ID"
                 value={deviceId}
                 onChange={(event) => setDeviceId(event.target.value)}
                 placeholder="Paste or select Device ID"
               />
-              <button onClick={() => updateDevice(true)}>Activate</button>
-              <button className="deactivate-button" onClick={() => updateDevice(false)}>
+              <button type="button" onClick={() => updateDevice(true)}>Activate</button>
+              <button className="deactivate-button" type="button" onClick={() => updateDevice(false)}>
                 Deactivate
               </button>
             </div>
@@ -647,7 +651,7 @@ function AdminPanel({ onBack, onUsageChange }) {
             snapshot.codes.map((code) => (
               <article className="code-row" key={code.id}>
                 <strong>{code.code}</strong>
-                <span>{code.active ? 'Active' : 'Inactive'}{code.usedByDeviceId ? ` Â· Used by ${code.usedByDeviceId}` : ''}</span>
+                <span>{code.active ? 'Active' : 'Inactive'}{code.usedByDeviceId ? ` - Used by ${code.usedByDeviceId}` : ''}</span>
                 <small>{code.expiresAt ? `Expires ${new Date(code.expiresAt).toLocaleDateString()}` : 'No expiry'}</small>
               </article>
             ))
@@ -660,11 +664,17 @@ function AdminPanel({ onBack, onUsageChange }) {
             <p className="muted">No devices yet.</p>
           ) : (
             snapshot.devices.map((device) => (
-              <article className="code-row selectable-row" key={device.deviceId} onClick={() => setDeviceId(device.deviceId)}>
+              <button
+                className="code-row selectable-row"
+                key={device.deviceId}
+                type="button"
+                onClick={() => setDeviceId(device.deviceId)}
+                aria-label={`Select device ${device.deviceId}`}
+              >
                 <strong>{device.deviceId}</strong>
                 <span>{device.premiumActive ? 'Premium active' : 'Inactive'}</span>
                 <small>This month: {device.usageCount} notes</small>
-              </article>
+              </button>
             ))
           )}
         </section>

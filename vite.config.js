@@ -10,7 +10,7 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['icon.svg', 'learnito-logo.png', 'whatsapp-qr.jpeg'],
+      includeAssets: ['icon.svg', 'learnito-logo.png', 'learnito-logo-ui.png', 'whatsapp-qr.jpeg'],
       devOptions: {
         enabled: true
       },
