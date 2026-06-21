@@ -18,6 +18,7 @@ import {
 import './styles.css';
 import {
   activatePremiumCode,
+  createDevicePremiumCode,
   createPremiumCode,
   getAdminSnapshot,
   getOrCreateDeviceId,
@@ -538,6 +539,7 @@ function AdminPanel({ onBack, onUsageChange }) {
   const [authorized, setAuthorized] = useState(() => Boolean(sessionStorage.getItem(ADMIN_SESSION_KEY)));
   const [snapshot, setSnapshot] = useState(getAdminSnapshot);
   const [deviceId, setDeviceId] = useState('');
+  const [generatedDeviceCode, setGeneratedDeviceCode] = useState('');
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
 
@@ -576,19 +578,43 @@ function AdminPanel({ onBack, onUsageChange }) {
     loadDashboard();
   }
 
-  function updateDevice(active) {
+  async function updateDevice(active) {
     const targetDeviceId = deviceId.trim() || (snapshot.devices.length === 1 ? snapshot.devices[0].deviceId : '');
-    const result = setPremiumDevice(targetDeviceId, active);
+
+    if (!targetDeviceId) {
+      setMessage('');
+      setGeneratedDeviceCode('');
+      setError('Device ID is required.');
+      return;
+    }
+
+    if (active) {
+      const code = createDevicePremiumCode(targetDeviceId);
+      setGeneratedDeviceCode(code);
+      setError('');
+      setMessage('Send this premium code to the user. The user must paste it on the same device.');
+
+      try {
+        await navigator.clipboard?.writeText(code);
+      } catch {
+        // The visible code can still be copied manually.
+      }
+
+      return;
+    }
+
+    const result = setPremiumDevice(targetDeviceId, false);
 
     if (!result.ok) {
       setMessage('');
+      setGeneratedDeviceCode('');
       setError(result.error);
       return;
     }
 
-    setDeviceId('');
     setError('');
-    setMessage(active ? 'Device activated.' : 'Device deactivated.');
+    setGeneratedDeviceCode('');
+    setMessage('Device deactivated on this admin browser. Ask the user to remove premium locally if needed.');
     loadDashboard();
   }
 
@@ -671,11 +697,18 @@ function AdminPanel({ onBack, onUsageChange }) {
                 onChange={(event) => setDeviceId(event.target.value)}
                 placeholder="Paste or select Device ID"
               />
-              <button type="button" onClick={() => updateDevice(true)}>Activate</button>
+              <button type="button" onClick={() => updateDevice(true)}>Create premium code</button>
               <button className="deactivate-button" type="button" onClick={() => updateDevice(false)}>
                 Deactivate
               </button>
             </div>
+            {generatedDeviceCode && (
+              <div className="generated-code-box">
+                <span>Premium code for this Device ID</span>
+                <strong>{generatedDeviceCode}</strong>
+                <small>Send this code to the user. They paste it in Premium code and tap Activate.</small>
+              </div>
+            )}
           </div>
         </section>
 

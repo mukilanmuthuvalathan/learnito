@@ -7,6 +7,8 @@ const PREMIUM_KEY = 'learnito_premium';
 const ADMIN_CODES_KEY = 'learnito_admin_codes';
 const PREMIUM_DEVICES_KEY = 'learnito_premium_devices';
 const VALID_DEMO_CODES = new Set(['LEARNITO-PRO', 'LEARNITO-2026', 'STUDY-PRO', 'TR-LEARNITO']);
+const DEVICE_CODE_PREFIX = 'LA';
+const DEVICE_CODE_SECRET = 'LEARNITO-DEVICE-PREMIUM-2026';
 
 export function getOrCreateDeviceId() {
   let saved = localStorage.getItem(DEVICE_KEY);
@@ -45,11 +47,13 @@ export function incrementUsage() {
 
 export function activatePremiumCode(code) {
   const normalized = code.trim().toUpperCase();
+  const deviceId = getOrCreateDeviceId();
+  const deviceCode = createDevicePremiumCode(deviceId);
   const storedCodes = getPremiumCodes();
   const storedCode = storedCodes.find((item) => item.code === normalized);
 
-  if (!VALID_DEMO_CODES.has(normalized) && !storedCode) {
-    return { ok: false, error: 'Premium code is invalid.' };
+  if (!VALID_DEMO_CODES.has(normalized) && normalized !== deviceCode && !storedCode) {
+    return { ok: false, error: 'Premium code is invalid for this device.' };
   }
 
   if (storedCode && (!storedCode.active || storedCode.usedByDeviceId)) {
@@ -57,7 +61,6 @@ export function activatePremiumCode(code) {
   }
 
   const expiresAt = Date.now() + PREMIUM_DAYS_MS;
-  const deviceId = getOrCreateDeviceId();
   localStorage.setItem(PREMIUM_KEY, JSON.stringify({ active: true, expiresAt }));
   upsertPremiumDevice(deviceId, true, expiresAt);
 
@@ -123,6 +126,15 @@ export function createPremiumCode() {
   return code;
 }
 
+export function createDevicePremiumCode(deviceId) {
+  const normalized = deviceId.trim();
+
+  if (!normalized) {
+    return '';
+  }
+
+  return `${DEVICE_CODE_PREFIX}-${hashCode(`${DEVICE_CODE_SECRET}:${normalized}`).slice(0, 12)}`;
+}
 export function setPremiumDevice(deviceId, active) {
   const normalized = deviceId.trim();
 
@@ -253,6 +265,24 @@ function isPremiumActive(premium) {
   return Boolean(premium?.active && (!premium.expiresAt || Number(premium.expiresAt) > Date.now()));
 }
 
+function hashCode(value) {
+  let hash = 2166136261;
+
+  for (let index = 0; index < value.length; index += 1) {
+    hash ^= value.charCodeAt(index);
+    hash = Math.imul(hash, 16777619);
+  }
+
+  const first = (hash >>> 0).toString(16).toUpperCase().padStart(8, '0');
+  let secondHash = 2166136261;
+
+  for (let index = value.length - 1; index >= 0; index -= 1) {
+    secondHash ^= value.charCodeAt(index);
+    secondHash = Math.imul(secondHash, 16777619);
+  }
+
+  return `${first}${(secondHash >>> 0).toString(16).toUpperCase().padStart(8, '0')}`;
+}
 function createCode() {
   const random = Math.random().toString(16).slice(2, 14).toUpperCase().padEnd(12, '0');
   return `TR-${random}`;

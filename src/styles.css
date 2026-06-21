@@ -809,6 +809,26 @@ li p {
   white-space: nowrap;
 }
 
+.generated-code-box {
+  background: #f0fdf4;
+  border: 1px solid #86efac;
+  border-radius: 8px;
+  color: #14532d;
+  display: grid;
+  gap: 6px;
+  padding: 12px;
+}
+
+.generated-code-box span,
+.generated-code-box small {
+  font-weight: 800;
+}
+
+.generated-code-box strong {
+  color: #166534;
+  font-size: 1.2rem;
+  word-break: break-all;
+}
 .admin-message {
   color: #166534;
   font-weight: 800;
