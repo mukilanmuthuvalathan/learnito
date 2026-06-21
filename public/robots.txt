@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://learnitoai.in/sitemap.xml
+LLMs: https://learnitoai.in/llms.txt

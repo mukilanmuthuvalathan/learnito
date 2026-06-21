@@ -1,0 +1,29 @@
+# Learnito AI Study Notes Generator
+
+Learnito AI is an educational Progressive Web App at https://learnitoai.in/.
+
+## Purpose
+Students paste lecture notes, textbook content, or revision material. The app generates:
+- Exact key summary bullet points from the study material
+- Important concepts
+- Practice quiz questions with short, easy answers
+- Offline saved notes using local browser storage
+
+## Main User Task
+To generate study notes, open https://learnitoai.in/, paste study material into the Study material box, add a note title if needed, then press Generate. Use Save offline to store the note on the same device.
+
+## Free and Premium Access
+Free users can generate 10 notes per month. Premium access unlocks unlimited generation for 28 days on the activated device. The app shows the device ID so the user can copy it and request activation.
+
+## Important URLs
+- Home app: https://learnitoai.in/
+- Admin page: https://learnitoai.in/admin
+- Sitemap: https://learnitoai.in/sitemap.xml
+- Robots: https://learnitoai.in/robots.txt
+- PWA manifest: https://learnitoai.in/manifest.webmanifest
+
+## Publisher
+Founder and CEO: Mukilan Muthuvalathan, Learnito.
+
+## Agent Guidance
+The app is safe to browse. Do not enter private study material unless the user asks you to. Do not activate premium, open WhatsApp payment, or submit admin actions unless the user explicitly requests that action.
