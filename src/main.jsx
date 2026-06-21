@@ -1,4 +1,20 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import { createRoot } from 'react-dom/client';
+import {
+  BookOpen,
+  Brain,
+  CheckCircle2,
+  Copy,
+  Highlighter,
+  MonitorDown,
+  KeyRound,
+  Loader2,
+  Plus,
+  Save,
+  ShieldCheck,
+  Sparkles,
+  Trash2
+} from 'lucide-react';
 import './styles.css';
 import {
   activatePremiumCode,
@@ -293,11 +309,11 @@ function App() {
               type="button"
               onClick={installApp}
             >
-              <Icon label="App" />
+              <MonitorDown size={17} />
               {installReady ? 'Install App' : 'Install'}
             </button>
             <div className="status-pill" role="status" aria-live="polite">
-              <Icon label="OK" />
+              <CheckCircle2 size={16} />
               {status}
             </div>
             {installHelp && <p className="install-help">{installHelp}</p>}
@@ -341,11 +357,11 @@ function App() {
 
               <div className="actions">
                 <button type="button" onClick={handleGenerate} disabled={isGenerating}>
-                  {isGenerating ? <Icon className="spin" label="..." /> : <Icon label="AI" />}
+                  {isGenerating ? <Loader2 className="spin" size={18} /> : <Sparkles size={18} />}
                   Generate
                 </button>
                 <button className="secondary" type="button" onClick={handleSave}>
-                  <Icon label="Save" />
+                  <Save size={18} />
                   Save offline
                 </button>
               </div>
@@ -354,7 +370,7 @@ function App() {
             <section className="results-panel">
               {!guide ? (
                 <div className="empty-state">
-                  <span className="empty-icon" aria-hidden="true">AI</span>
+                  <Brain size={44} />
                   <h2>Your study guide appears here</h2>
                   <p>Generate concise summaries, highlighted concepts, and practice questions.</p>
                 </div>
@@ -382,7 +398,7 @@ function App() {
             <div>
               <input id="device-id" aria-label="Your device ID" readOnly value={deviceId} />
               <button className="copy-device-button" type="button" onClick={copyDeviceId} aria-label="Copy device ID">
-                <Icon label="ID" />
+                <Copy size={16} />
                 {copied ? 'Copied' : 'Copy'}
               </button>
             </div>
@@ -437,7 +453,7 @@ function App() {
             <h2>Saved notes</h2>
           </div>
           <button className="icon-button" type="button" onClick={startNewNote} aria-label="Create note">
-            <Icon label="+" />
+            <Plus size={18} />
           </button>
         </div>
 
@@ -460,7 +476,7 @@ function App() {
                   onClick={() => handleDelete(note.id)}
                   aria-label={`Delete ${note.title}`}
                 >
-                  <Icon label="Del" />
+                  <Trash2 size={16} />
                 </button>
               </article>
             ))
@@ -473,7 +489,7 @@ function App() {
           <span>Founder &amp; CEO, Learnito</span>
         </div>
         <button className="admin-link" type="button" onClick={() => navigate('admin')}>
-          <Icon label="Admin" />
+          <ShieldCheck size={17} />
           Admin
         </button>
       </footer>
@@ -601,7 +617,7 @@ function AdminPanel({ onBack, onUsageChange }) {
               <h2>Create code</h2>
             </div>
             <button type="button" onClick={createCode}>
-              <Icon label="Key" />
+              <KeyRound size={18} />
               Create code
             </button>
           </div>
@@ -679,7 +695,7 @@ function StatCard({ label, value }) {
 function StudyGuide({ guide }) {
   return (
     <div className="study-guide">
-      <GuideSection icon="Summary" title="Key Summary">
+      <GuideSection icon={<BookOpen />} title="Key Summary">
         <ul>
           {guide.summary.map((item) => (
             <li key={item}>{item}</li>
@@ -687,7 +703,7 @@ function StudyGuide({ guide }) {
         </ul>
       </GuideSection>
 
-      <GuideSection icon="Concept" title="Important Concepts">
+      <GuideSection icon={<Highlighter />} title="Important Concepts">
         <div className="concepts">
           {guide.concepts.map((concept) => (
             <span key={concept}>{concept}</span>
@@ -695,7 +711,7 @@ function StudyGuide({ guide }) {
         </div>
       </GuideSection>
 
-      <GuideSection icon="Quiz" title="Practice Quiz">
+      <GuideSection icon={<Brain />} title="Practice Quiz">
         <ol>
           {guide.quiz.map((question) => (
             <li key={question.question}>
@@ -713,19 +729,11 @@ function GuideSection({ children, icon, title }) {
   return (
     <section className="guide-section">
       <h2>
-        <Icon label={icon} />
+        {React.cloneElement(icon, { size: 20 })}
         {title}
       </h2>
       {children}
     </section>
-  );
-}
-
-function Icon({ className = '', label }) {
-  return (
-    <span className={`mini-icon ${className}`.trim()} aria-hidden="true">
-      {label}
-    </span>
   );
 }
 
