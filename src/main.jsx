@@ -47,6 +47,7 @@ function App() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [deviceId, setDeviceId] = useState('');
   const [premiumCode, setPremiumCode] = useState('');
+  const [generatedActivationLink, setGeneratedActivationLink] = useState('');
   const [usage, setUsage] = useState({ count: 0, limit: 10, premiumActive: false });
   const [status, setStatus] = useState('Ready offline');
   const [copied, setCopied] = useState(false);
@@ -59,8 +60,10 @@ function App() {
   const limitReached = !usage.premiumActive && usage.count >= usage.limit;
 
   useEffect(() => {
-    setDeviceId(getOrCreateDeviceId());
+    const currentDeviceId = getOrCreateDeviceId();
+    setDeviceId(currentDeviceId);
     setUsage(getUsageStatus());
+    handlePremiumActivationLink(currentDeviceId);
 
     getNotes().then((storedNotes) => {
       setNotes(storedNotes);
@@ -216,6 +219,35 @@ function App() {
     setStatus('New note ready');
   }
 
+  function handlePremiumActivationLink(currentDeviceId) {
+    const params = new URLSearchParams(window.location.search);
+    const premiumDeviceId = params.get('premiumDevice');
+    const premiumKey = params.get('premiumKey');
+
+    if (!premiumDeviceId || !premiumKey) return;
+
+    const cleanUrl = window.location.pathname || '/';
+    window.history.replaceState({}, '', cleanUrl);
+
+    if (premiumDeviceId !== currentDeviceId) {
+      setError('This premium link is for another device. Copy this device ID and ask admin for a new link.');
+      setStatus('Premium link device mismatch');
+      return;
+    }
+
+    const result = activatePremiumCode(premiumKey);
+
+    if (!result.ok) {
+      setError(result.error);
+      setStatus(result.error);
+      return;
+    }
+
+    setPremiumCode('');
+    setUsage(getUsageStatus());
+    setMessage('Premium is activated on this device.');
+    setStatus('Premium is activated');
+  }
   function activatePremium() {
     setError('');
     setMessage('');
@@ -540,6 +572,7 @@ function AdminPanel({ onBack, onUsageChange }) {
   const [snapshot, setSnapshot] = useState(getAdminSnapshot);
   const [deviceId, setDeviceId] = useState('');
   const [generatedDeviceCode, setGeneratedDeviceCode] = useState('');
+  const [generatedActivationLink, setGeneratedActivationLink] = useState('');
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
 
@@ -590,14 +623,16 @@ function AdminPanel({ onBack, onUsageChange }) {
 
     if (active) {
       const code = createDevicePremiumCode(targetDeviceId);
+      const activationLink = `${window.location.origin}/?premiumDevice=${encodeURIComponent(targetDeviceId)}&premiumKey=${encodeURIComponent(code)}`;
       setGeneratedDeviceCode(code);
+      setGeneratedActivationLink(activationLink);
       setError('');
-      setMessage('Send this premium code to the user. The user must paste it on the same device.');
+      setMessage('Activation link created. Send this link to the user. It works only on the same device.');
 
       try {
-        await navigator.clipboard?.writeText(code);
+        await navigator.clipboard?.writeText(activationLink);
       } catch {
-        // The visible code can still be copied manually.
+        // The visible link can still be copied manually.
       }
 
       return;
@@ -697,16 +732,16 @@ function AdminPanel({ onBack, onUsageChange }) {
                 onChange={(event) => setDeviceId(event.target.value)}
                 placeholder="Paste or select Device ID"
               />
-              <button type="button" onClick={() => updateDevice(true)}>Create premium code</button>
+              <button type="button" onClick={() => updateDevice(true)}>Create activation link</button>
               <button className="deactivate-button" type="button" onClick={() => updateDevice(false)}>
                 Deactivate
               </button>
             </div>
-            {generatedDeviceCode && (
+            {generatedActivationLink && (
               <div className="generated-code-box">
-                <span>Premium code for this Device ID</span>
-                <strong>{generatedDeviceCode}</strong>
-                <small>Send this code to the user. They paste it in Premium code and tap Activate.</small>
+                <span>Premium activation link</span>
+                <strong>{generatedActivationLink}</strong>
+                <small>Send this link to the user. When they open it on the same device, premium activates automatically.</small>
               </div>
             )}
           </div>
