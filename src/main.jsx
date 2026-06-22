@@ -81,6 +81,42 @@ const INFO_PAGES = {
 };
 const ASSET_BASE = import.meta.env.BASE_URL;
 const LOGO_UI_SRC = `${ASSET_BASE}learnito-logo-small.png`;
+const GA_MEASUREMENT_ID = 'G-5V26Y64H1J';
+
+function loadAnalyticsWhenReady() {
+  if (typeof window === 'undefined' || window.__learnitoAnalyticsLoaded) return;
+
+  window.__learnitoAnalyticsLoaded = true;
+
+  const loadAnalytics = () => {
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function gtag() {
+      window.dataLayer.push(arguments);
+    };
+    window.gtag('js', new Date());
+    window.gtag('config', GA_MEASUREMENT_ID);
+
+    const script = document.createElement('script');
+    script.async = true;
+    script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
+    document.head.appendChild(script);
+  };
+
+  const schedule = () => {
+    if ('requestIdleCallback' in window) {
+      window.requestIdleCallback(loadAnalytics, { timeout: 8000 });
+      return;
+    }
+
+    window.setTimeout(loadAnalytics, 8000);
+  };
+
+  if (document.readyState === 'complete') {
+    schedule();
+  } else {
+    window.addEventListener('load', schedule, { once: true });
+  }
+}
 
 function App() {
   const [sourceText, setSourceText] = useState(sampleText);
@@ -104,6 +140,7 @@ function App() {
   const limitReached = !usage.premiumActive && usage.count >= usage.limit;
 
   useEffect(() => {
+    loadAnalyticsWhenReady();
     const currentDeviceId = getOrCreateDeviceId();
     setDeviceId(currentDeviceId);
     setUsage(getUsageStatus());
