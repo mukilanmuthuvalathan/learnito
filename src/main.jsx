@@ -608,7 +608,9 @@ function App() {
   }
 
   return (
-    <main className="app-shell">
+    <>
+      <a className="skip-link" href="#main-content">Skip to main content</a>
+      <main id="main-content" className="app-shell">
       <section className="workspace">
         <header className="topbar">
           <div className="brand-heading">
@@ -842,9 +844,9 @@ function App() {
           <button type="button" onClick={() => navigate('privacyPolicy')}>Privacy Policy</button>
           <button type="button" onClick={() => navigate('termsConditions')}>Terms &amp; Conditions</button>
           <button type="button" onClick={() => navigate('contact')}>Contact Us</button>
-        </nav>
-      </footer>
-    </main>
+        </nav>      </footer>
+      </main>
+    </>
   );
 }
 
@@ -873,7 +875,7 @@ function RoadmapSections({ onNavigate, onShare }) {
           <h2>About Learnito AI</h2>
           <p>Learnito AI helps students create notes, summaries, and quizzes using AI to make studying easier and smarter.</p>
           <div className="founder-profile">
-            <img src={LOGO_UI_SRC} alt="Learnito AI founder card logo" width="82" height="82" />
+            <img src={LOGO_UI_SRC} alt="Learnito AI founder card logo" width="82" height="82" loading="lazy" decoding="async" />
             <div>
               <strong>Mukilan Muthuvalathan</strong>
               <span>Founder &amp; CEO, Learnito AI</span>
