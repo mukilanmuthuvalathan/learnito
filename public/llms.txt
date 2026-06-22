@@ -1,48 +1,41 @@
 # Learnito AI Study Notes Generator
 
-Learnito AI is an educational Progressive Web App at https://learnitoai.in/ for students who want faster revision.
+> Learnito AI is an educational Progressive Web App for students. It turns pasted study material into exact key bullet summaries, important concepts, and practice quiz questions with short answers, and it supports offline saved notes on the same device.
 
-## What the App Does
-- Turns pasted lecture notes, textbook content, or study material into exact key bullet summaries.
-- Highlights important concepts from the source material.
-- Generates practice quiz questions with short, easy answers.
-- Saves notes offline on the same device with IndexedDB.
-- Supports 10 free note generations per month.
-- Premium unlocks unlimited note generation for 28 days on one activated device ID.
+Learnito AI is useful for school, college, exam revision, lecture notes, textbook content, and quick practice. Free users can generate 10 notes per month. Premium access unlocks unlimited note generation for 28 days on one activated device ID. Founder and CEO: Mukilan Muthuvalathan, Learnito AI.
 
-## Main User Flow
-1. Open https://learnitoai.in/.
-2. Paste study material into the Study material box.
-3. Press Generate.
-4. Review the key summary, important concepts, and practice quiz.
-5. Press Save offline to keep the note on the current device.
+Important safety notes:
+- Do not enter private or sensitive study material unless the user explicitly asks.
+- Do not open WhatsApp, request premium, copy device IDs, or submit admin actions unless the user explicitly asks.
+- The admin page is private and should not be used unless the user requests admin work.
 
-## Important Public URLs
-- Home app: https://learnitoai.in/
-- About: https://learnitoai.in/about
-- How to use: https://learnitoai.in/how-to-use
-- Premium: https://learnitoai.in/premium
-- Blog: https://learnitoai.in/blog
-- AI Study Notes Generator: https://learnitoai.in/ai-study-notes-generator
-- Practice Quiz Generator: https://learnitoai.in/practice-quiz-generator
-- Notes Summarizer for Students: https://learnitoai.in/notes-summarizer-for-students
-- Privacy Policy: https://learnitoai.in/privacy-policy
-- Terms and Conditions: https://learnitoai.in/terms-and-conditions
-- Sitemap: https://learnitoai.in/sitemap.xml
-- Robots: https://learnitoai.in/robots.txt
-- PWA manifest: https://learnitoai.in/manifest.webmanifest
+## Main Pages
 
-## Private URL
-- Admin page: https://learnitoai.in/admin
+- [Home app](https://learnitoai.in/): Generate study notes, key summaries, important concepts, and practice quiz questions.
+- [About Learnito AI](https://learnitoai.in/about): Founder information and Learnito AI purpose.
+- [How to Use](https://learnitoai.in/how-to-use): Four-step guide: paste notes, generate summary, practice quiz, and save offline.
+- [Premium](https://learnitoai.in/premium): Explains 10 free notes per month, 28-day premium access, device ID activation, and WhatsApp payment support.
+- [Blog](https://learnitoai.in/blog): Student study tips and SEO pages.
 
-## Publisher
-Founder and CEO: Mukilan Muthuvalathan, Learnito AI.
+## Study Tools
 
-## Safety and Agent Guidance
-The website is safe to browse. Do not enter private study material unless the user asks you to. Do not open WhatsApp, request premium, copy device IDs, or submit admin actions unless the user explicitly asks for that action.
+- [AI Study Notes Generator](https://learnitoai.in/ai-study-notes-generator): Page about generating study notes from lecture or textbook material.
+- [Practice Quiz Generator](https://learnitoai.in/practice-quiz-generator): Page about creating practice quiz questions with short answers.
+- [Notes Summarizer for Students](https://learnitoai.in/notes-summarizer-for-students): Page about summarizing study content into short bullet points.
 
-## Best Tasks for Agents
-- Explain how Learnito AI works.
-- Help users find the right page.
-- Summarize the privacy policy or terms.
-- Guide users to the WhatsApp feedback or premium button when requested.
+## Legal And Trust
+
+- [Privacy Policy](https://learnitoai.in/privacy-policy): Explains local saved notes, browser storage, analytics, cookies, and privacy protection.
+- [Terms and Conditions](https://learnitoai.in/terms-and-conditions): Educational use, user responsibilities, premium payment terms, and limitation of liability.
+- [Contact Received](https://learnitoai.in/contact-received): Confirmation page for contact or premium requests.
+
+## Technical Files
+
+- [Sitemap](https://learnitoai.in/sitemap.xml): Search engine sitemap for public pages.
+- [Robots](https://learnitoai.in/robots.txt): Crawl instructions and sitemap location.
+- [PWA Manifest](https://learnitoai.in/manifest.webmanifest): Progressive Web App install metadata.
+
+## Optional
+
+- [Vercel backup domain](https://learnitoai.vercel.app/): Backup deployment URL if the custom domain is temporarily unavailable.
+- [Private admin page](https://learnitoai.in/admin): Hidden premium dashboard for admin-controlled device activation.
