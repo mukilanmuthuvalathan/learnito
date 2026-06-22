@@ -30,7 +30,7 @@ export default defineConfig({
     inlineCssPlugin(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['icon.svg', 'learnito-logo.png', 'learnito-logo-ui.png', 'learnito-logo-small.png', 'whatsapp-qr.jpeg'],
+      includeAssets: ['learnito-logo.png', 'learnito-logo-ui.png', 'learnito-logo-small.png', 'whatsapp-qr.jpeg'],
       devOptions: {
         enabled: true
       },
@@ -51,9 +51,9 @@ export default defineConfig({
             purpose: 'any maskable'
           },
           {
-            src: `${base}icon.svg`,
-            sizes: 'any',
-            type: 'image/svg+xml',
+            src: `${base}learnito-logo-ui.png`,
+            sizes: '192x192',
+            type: 'image/png',
             purpose: 'any maskable'
           }
         ]
