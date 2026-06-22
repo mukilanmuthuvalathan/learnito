@@ -1,4 +1,4 @@
-import React, { Suspense, lazy, useEffect, useMemo, useRef, useState } from 'react';
+import React, { Suspense, lazy, useEffect, useMemo, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import {
   BookOpen,
@@ -30,7 +30,6 @@ const SHARE_URL = 'https://learnitoai.in/';
 const SHARE_TEXT = 'Try Learnito AI Study Notes Generator: summaries, concepts, and quiz questions from study material.';
 const CONTACT_RECEIVED_PATH = '/contact-received';
 const AdminPanel = lazy(() => import('./AdminPanel.jsx'));
-const RoadmapSections = lazy(() => import('./RoadmapSections.jsx'));
 const InfoPages = lazy(() => import('./InfoPages.jsx'));
 
 const PAGE_PATHS = {
@@ -206,8 +205,6 @@ function App() {
   const [installReady, setInstallReady] = useState(false);
   const [installHelp, setInstallHelp] = useState('');
   const [view, setView] = useState(() => getViewFromPath());
-  const [showRoadmap, setShowRoadmap] = useState(false);
-  const roadmapSentinelRef = useRef(null);
   const limitReached = !usage.premiumActive && usage.count >= usage.limit;
 
   useEffect(() => {
@@ -237,28 +234,6 @@ function App() {
     updatePageMeta(view);
   }, [view]);
 
-  useEffect(() => {
-    if (view !== 'app' || showRoadmap) return undefined;
-
-    const sentinel = roadmapSentinelRef.current;
-    if (!sentinel || !('IntersectionObserver' in window)) {
-      const timer = window.setTimeout(() => setShowRoadmap(true), 3500);
-      return () => window.clearTimeout(timer);
-    }
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setShowRoadmap(true);
-          observer.disconnect();
-        }
-      },
-      { rootMargin: '360px 0px' }
-    );
-
-    observer.observe(sentinel);
-    return () => observer.disconnect();
-  }, [showRoadmap, view]);
 
   useEffect(() => {
     function handlePopState() {
@@ -766,28 +741,11 @@ function App() {
           )}
         </div>
       </aside>
-      <div className="roadmap-sentinel" ref={roadmapSentinelRef} aria-hidden="true" />
-      {showRoadmap && <RoadmapSections onNavigate={navigate} onShare={shareLearnito} />}
-
-      <a className="floating-feedback" href={WHATSAPP_PREMIUM_LINK} rel="noreferrer" target="_blank">
-        <MessageCircle size={18} />
-        Send Feedback
-      </a>
       <footer className="app-footer">
         <div>
           <strong>Mukilan Muthuvalathan</strong>
           <span>Founder &amp; CEO, Learnito</span>
         </div>
-        <nav className="footer-links" aria-label="Learnito pages">
-          <button type="button" onClick={() => navigate('app')}>Home</button>
-          <button type="button" onClick={() => navigate('app')}>Features</button>
-          <button type="button" onClick={() => navigate('howToUse')}>How to Use</button>
-          <button type="button" onClick={() => navigate('premium')}>Premium</button>
-          <button type="button" onClick={() => navigate('blog')}>Blog</button>
-          <button type="button" onClick={() => navigate('privacyPolicy')}>Privacy Policy</button>
-          <button type="button" onClick={() => navigate('termsConditions')}>Terms &amp; Conditions</button>
-          <button type="button" onClick={() => navigate('contact')}>Contact Us</button>
-        </nav>
       </footer>
       </main>
     </>
