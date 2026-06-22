@@ -750,6 +750,13 @@ li p {
   padding: 9px;
 }
 
+.whatsapp-payment-card img {
+  aspect-ratio: 1 / 1;
+  height: auto;
+  max-width: 220px;
+  width: 100%;
+}
+
 .whatsapp-payment-card .premium-access-button {
   margin-top: 0;
 }
@@ -1275,6 +1282,11 @@ li p {
   }
 }
 
+
+.roadmap-sentinel {
+  grid-column: 1 / -1;
+  height: 1px;
+}
 .roadmap-section {
   background: #ffffff;
   contain-intrinsic-size: 1200px;
@@ -1472,7 +1484,8 @@ li p {
 }
 
 @media (max-width: 680px) {
-  .roadmap-section {
+  
+.roadmap-section {
     padding: 16px;
   }
 

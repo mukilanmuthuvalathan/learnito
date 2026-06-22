@@ -1,4 +1,4 @@
-import React, { Suspense, lazy, useEffect, useMemo, useState } from 'react';
+import React, { Suspense, lazy, useEffect, useMemo, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import {
   BookOpen,
@@ -245,13 +245,11 @@ function loadAnalyticsWhenReady() {
     document.head.appendChild(script);
   };
 
-  let fallbackTimer;
   const interactionEvents = ['pointerdown', 'keydown', 'touchstart'];
   const cleanup = () => {
     interactionEvents.forEach((eventName) => {
       window.removeEventListener(eventName, loadOnce);
     });
-    window.clearTimeout(fallbackTimer);
   };
 
   const loadOnce = () => {
@@ -262,7 +260,6 @@ function loadAnalyticsWhenReady() {
   interactionEvents.forEach((eventName) => {
     window.addEventListener(eventName, loadOnce, { once: true, passive: true });
   });
-  fallbackTimer = window.setTimeout(loadOnce, 20000);
 }
 
 function updatePageMeta(view) {
@@ -301,6 +298,8 @@ function App() {
   const [installReady, setInstallReady] = useState(false);
   const [installHelp, setInstallHelp] = useState('');
   const [view, setView] = useState(() => getViewFromPath());
+  const [showRoadmap, setShowRoadmap] = useState(false);
+  const roadmapSentinelRef = useRef(null);
   const limitReached = !usage.premiumActive && usage.count >= usage.limit;
 
   useEffect(() => {
@@ -329,6 +328,29 @@ function App() {
   useEffect(() => {
     updatePageMeta(view);
   }, [view]);
+
+  useEffect(() => {
+    if (view !== 'app' || showRoadmap) return undefined;
+
+    const sentinel = roadmapSentinelRef.current;
+    if (!sentinel || !('IntersectionObserver' in window)) {
+      const timer = window.setTimeout(() => setShowRoadmap(true), 3500);
+      return () => window.clearTimeout(timer);
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setShowRoadmap(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '360px 0px' }
+    );
+
+    observer.observe(sentinel);
+    return () => observer.disconnect();
+  }, [showRoadmap, view]);
 
   useEffect(() => {
     function handlePopState() {
@@ -834,7 +856,8 @@ function App() {
           )}
         </div>
       </aside>
-      <RoadmapSections onNavigate={navigate} onShare={shareLearnito} />
+      <div className="roadmap-sentinel" ref={roadmapSentinelRef} aria-hidden="true" />
+      {showRoadmap && <RoadmapSections onNavigate={navigate} onShare={shareLearnito} />}
 
       <a className="floating-feedback" href={WHATSAPP_PREMIUM_LINK} rel="noreferrer" target="_blank">
         <MessageCircle size={18} />
@@ -854,7 +877,8 @@ function App() {
           <button type="button" onClick={() => navigate('privacyPolicy')}>Privacy Policy</button>
           <button type="button" onClick={() => navigate('termsConditions')}>Terms &amp; Conditions</button>
           <button type="button" onClick={() => navigate('contact')}>Contact Us</button>
-        </nav>      </footer>
+        </nav>
+      </footer>
       </main>
     </>
   );
