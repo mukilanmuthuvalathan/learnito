@@ -61,7 +61,7 @@ button {
 
 
 .skip-link {
-  background: #047857;
+  background: #2563eb;
   border-radius: 16px;
   color: #ffffff;
   font-weight: 900;
@@ -76,7 +76,7 @@ button {
 }
 
 .skip-link:focus {
-  outline: 3px solid #a7f3d0;
+  outline: 3px solid #bfdbfe;
   transform: translateY(0);
 }
 .brand-heading {
@@ -86,8 +86,7 @@ button {
   min-width: 0;
 }
 
-.brand-heading img,
-.brand-mark {
+.brand-heading img {
   border-radius: 16px;
   height: 82px;
   object-fit: contain;
@@ -95,7 +94,7 @@ button {
 }
 
 .eyebrow {
-  color: #047857;
+  color: #2563eb;
   font-size: 0.76rem;
   font-weight: 800;
   letter-spacing: 0.08em;
@@ -121,10 +120,10 @@ h2 {
 
 .status-pill {
   align-items: center;
-  background: #dcfce7;
-  border: 1px solid #86efac;
+  background: #dbeafe;
+  border: 1px solid #93c5fd;
   border-radius: 999px;
-  color: #166534;
+  color: #1e40af;
   display: inline-flex;
   font-weight: 700;
   gap: 8px;
@@ -134,10 +133,10 @@ h2 {
 
 .utility-button {
   align-items: center;
-  background: #ecfdf5;
-  border: 1px solid #a7f3d0;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
   border-radius: 16px;
-  color: #047857;
+  color: #2563eb;
   display: inline-flex;
   font-weight: 800;
   gap: 8px;
@@ -148,12 +147,12 @@ h2 {
 }
 
 .utility-button:hover {
-  background: #a7f3d0;
+  background: #bfdbfe;
 }
 
 .premium-benefits {
   background: #ffffff;
-  border: 1px solid #a7f3d0;
+  border: 1px solid #bfdbfe;
   border-radius: 16px;
   color: #1e3a8a;
   display: grid;
@@ -198,10 +197,10 @@ h2 {
 }
 
 .install-help {
-  background: #ecfdf5;
-  border: 1px solid #a7f3d0;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
   border-radius: 16px;
-  color: #047857;
+  color: #2563eb;
   font-size: 0.88rem;
   font-weight: 800;
   margin: 0;
@@ -223,8 +222,8 @@ h2 {
 }
 
 .secondary-link {
-  background: #ecfdf5;
-  color: #047857;
+  background: #eff6ff;
+  color: #2563eb;
 }
 
 .editor-grid {
@@ -272,8 +271,8 @@ textarea {
 
 input:focus,
 textarea:focus {
-  border-color: #047857;
-  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.22);
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.18);
 }
 
 textarea {
@@ -291,7 +290,7 @@ textarea {
 .actions button,
 .icon-button {
   align-items: center;
-  background: #047857;
+  background: #2563eb;
   border-radius: 16px;
   color: #ffffff;
   display: inline-flex;
@@ -313,8 +312,8 @@ textarea {
 }
 
 .actions .secondary {
-  background: #ecfdf5;
-  color: #047857;
+  background: #eff6ff;
+  color: #2563eb;
 }
 
 .results-panel {
@@ -324,7 +323,7 @@ textarea {
 .limit-page {
   align-items: center;
   background: #ffffff;
-  border: 1px solid #a7f3d0;
+  border: 1px solid #bfdbfe;
   border-radius: 16px;
   box-shadow: 0 20px 50px rgba(15, 23, 42, 0.08);
   display: flex;
@@ -364,7 +363,7 @@ textarea {
 .limit-premium-form button,
 .limit-device-box button {
   align-items: center;
-  background: #047857;
+  background: #2563eb;
   border-radius: 16px;
   color: #ffffff;
   display: inline-flex;
@@ -428,9 +427,9 @@ textarea {
 }
 
 .footer-links button {
-  background: #ecfdf5;
+  background: #eff6ff;
   border-radius: 16px;
-  color: #047857;
+  color: #2563eb;
   font-weight: 800;
   min-height: 44px;
   padding: 0 14px;
@@ -483,7 +482,7 @@ textarea {
 }
 
 .info-card h2 {
-  color: #047857;
+  color: #2563eb;
   font-size: 1.2rem;
   margin-bottom: 10px;
 }
@@ -502,7 +501,7 @@ textarea {
 }
 
 .info-actions button {
-  background: #047857;
+  background: #2563eb;
   border-radius: 16px;
   color: #ffffff;
   font-weight: 800;
@@ -511,8 +510,8 @@ textarea {
 }
 
 .info-actions .secondary-info-button {
-  background: #ecfdf5;
-  color: #047857;
+  background: #eff6ff;
+  color: #2563eb;
 }
 .empty-state {
   align-items: center;
@@ -525,7 +524,7 @@ textarea {
 }
 
 .empty-state svg {
-  color: #047857;
+  color: #2563eb;
 }
 
 .study-guide {
@@ -550,7 +549,7 @@ textarea {
 }
 
 .guide-section h2 svg {
-  color: #047857;
+  color: #2563eb;
 }
 
 li {
@@ -570,7 +569,7 @@ li p {
 .concepts span {
   background: #d1fae5;
   border-radius: 999px;
-  color: #047857;
+  color: #2563eb;
   font-weight: 800;
   padding: 8px 12px;
 }
@@ -584,8 +583,8 @@ li p {
 }
 
 .premium-panel {
-  background: #ecfdf5;
-  border: 1px solid #a7f3d0;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
   border-radius: 16px;
   margin-bottom: 24px;
   padding: 16px;
@@ -604,7 +603,7 @@ li p {
 
 .note-count-meter div {
   background: #ffffff;
-  border: 1px solid #a7f3d0;
+  border: 1px solid #bfdbfe;
   border-radius: 16px;
   padding: 12px;
 }
@@ -615,7 +614,7 @@ li p {
 }
 
 .note-count-meter strong {
-  color: #047857;
+  color: #2563eb;
   font-size: 1.6rem;
 }
 
@@ -645,7 +644,7 @@ li p {
 .device-box button,
 .premium-access-button {
   align-items: center;
-  background: #047857;
+  background: #2563eb;
   border-radius: 16px;
   color: #ffffff;
   display: inline-flex;
@@ -655,8 +654,8 @@ li p {
 }
 
 .premium-access-button {
-  border: 2px solid #059669;
-  box-shadow: 0 10px 22px rgba(4, 120, 87, 0.22);
+  border: 2px solid #1d4ed8;
+  box-shadow: 0 10px 22px rgba(37, 99, 235, 0.22);
   margin-top: 12px;
   min-height: 44px;
   text-decoration: none;
@@ -664,7 +663,7 @@ li p {
 }
 
 .premium-access-button:hover {
-  background: #059669;
+  background: #1d4ed8;
 }
 
 .device-box {
@@ -691,10 +690,10 @@ li p {
 }
 
 .premium-message {
-  background: #dcfce7;
-  border: 1px solid #86efac;
+  background: #dbeafe;
+  border: 1px solid #93c5fd;
   border-radius: 16px;
-  color: #166534;
+  color: #1e40af;
   font-size: 0.92rem;
   font-weight: 800;
   margin: 14px 0 0;
@@ -714,7 +713,7 @@ li p {
 
 .whatsapp-payment-card {
   background: #f0fdf4;
-  border: 1px solid #86efac;
+  border: 1px solid #93c5fd;
   border-radius: 16px;
   color: #14532d;
   display: grid;
@@ -726,7 +725,7 @@ li p {
 
 .whatsapp-payment-card img {
   background: #ffffff;
-  border: 1px solid #bbf7d0;
+  border: 1px solid #bfdbfe;
   border-radius: 16px;
   margin: 0 auto;
   max-width: 210px;
@@ -740,14 +739,14 @@ li p {
 }
 
 .whatsapp-payment-card h3 {
-  color: #166534;
+  color: #1e40af;
   font-size: 1.1rem;
 }
 
 .whatsapp-payment-card strong {
-  background: #dcfce7;
+  background: #dbeafe;
   border-radius: 16px;
-  color: #166534;
+  color: #1e40af;
   padding: 9px;
 }
 
@@ -871,7 +870,7 @@ li p {
 }
 
 .admin-login-card svg {
-  color: #047857;
+  color: #2563eb;
 }
 
 .admin-login-card h2 {
@@ -882,7 +881,7 @@ li p {
 .admin-actions button,
 .admin-login-card button {
   align-items: center;
-  background: #047857;
+  background: #2563eb;
   border-radius: 16px;
   color: #ffffff;
   display: inline-flex;
@@ -929,11 +928,11 @@ li p {
 }
 
 .selectable-row:hover {
-  background: #ecfdf5;
+  background: #eff6ff;
 }
 
 .code-row strong {
-  color: #047857;
+  color: #2563eb;
 }
 
 .code-row span,
@@ -979,7 +978,7 @@ li p {
 
 .generated-code-box {
   background: #f0fdf4;
-  border: 1px solid #86efac;
+  border: 1px solid #93c5fd;
   border-radius: 16px;
   color: #14532d;
   display: grid;
@@ -993,12 +992,12 @@ li p {
 }
 
 .generated-code-box strong {
-  color: #166534;
+  color: #1e40af;
   font-size: 1.2rem;
   word-break: break-all;
 }
 .admin-message {
-  color: #166534;
+  color: #1e40af;
   font-weight: 800;
   grid-column: 1 / -1;
   margin: 0;
@@ -1031,7 +1030,7 @@ li p {
 }
 
 .note-card.active {
-  border-color: #047857;
+  border-color: #2563eb;
 }
 
 .note-card button {
@@ -1141,10 +1140,6 @@ li p {
   }
 
   .brand-heading img,
-  .brand-mark {
-    height: 58px;
-    width: 58px;
-  }
 
   .status-pill {
     align-items: flex-start;
