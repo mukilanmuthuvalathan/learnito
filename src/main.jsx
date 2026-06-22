@@ -34,6 +34,51 @@ const ADMIN_PASSWORD = 'Mukilan@2009';
 const ADMIN_SESSION_KEY = 'learnito_admin_password';
 const WHATSAPP_PREMIUM_LINK = 'https://wa.me/message/6FSCTMUBFVESK1?src=qr';
 const CONTACT_RECEIVED_PATH = '/contact-received';
+const PAGE_PATHS = {
+  about: '/about',
+  app: '/',
+  contact: CONTACT_RECEIVED_PATH,
+  howToUse: '/how-to-use',
+  privacyTerms: '/privacy-policy-terms'
+};
+const INFO_PAGES = {
+  howToUse: {
+    eyebrow: 'How to use',
+    title: 'How to use Learnito AI',
+    intro: 'Learnito helps students turn study material into short summaries, important concepts, and practice quiz questions.',
+    sections: [
+      { title: '1. Paste your study material', body: 'Copy lecture notes, textbook content, revision material, or class notes and paste them into the Study material box.' },
+      { title: '2. Generate study notes', body: 'Click Generate. Learnito creates exact key bullet points, important concepts, and practice questions based on your content.' },
+      { title: '3. Practice faster', body: 'Read the short answers in the Practice Quiz section. The answers are written in simple points for quick revision.' },
+      { title: '4. Save offline', body: 'Click Save offline to keep your notes on the same device. Saved notes can be opened again even when you are offline.' },
+      { title: '5. Premium access', body: 'Every device gets 10 free note generations per month. Premium unlocks unlimited generation for 28 days on the activated device.' }
+    ]
+  },
+  privacyTerms: {
+    eyebrow: 'Privacy and terms',
+    title: 'Privacy Policy and Terms',
+    intro: 'Learnito is built for students. These simple rules explain how the app works and what users should know before using it.',
+    sections: [
+      { title: 'Privacy Policy', body: 'Learnito stores saved notes locally on your device using browser storage. Your saved notes are not uploaded to a Learnito account database.' },
+      { title: 'Study material', body: 'Only paste study material you are allowed to use. Do not paste private, sensitive, or illegal content.' },
+      { title: 'Device ID and premium', body: 'Learnito creates a device ID in your browser so premium access can be activated for one device. Admin activation links work only for the matching device ID.' },
+      { title: 'Payments', body: 'Premium requests are handled through WhatsApp support. Always confirm payment details before paying. Premium access lasts 28 days after activation.' },
+      { title: 'Terms of use', body: 'Learnito is a study helper. Users should review generated notes and answers before depending on them for exams, homework, or official work.' },
+      { title: 'Contact', body: 'For help, premium activation, or questions, use the Access Premium WhatsApp button in the app.' }
+    ]
+  },
+  about: {
+    eyebrow: 'About Learnito',
+    title: 'About Learnito AI',
+    intro: 'Learnito AI Study Notes Generator helps students revise faster by converting study material into clear notes and practice questions.',
+    sections: [
+      { title: 'What Learnito does', body: 'Students paste study material and Learnito creates key summaries, important concepts, and practice quiz questions with simple answers.' },
+      { title: 'Founder', body: 'Learnito was founded by Mukilan Muthuvalathan, Founder and CEO of Learnito.' },
+      { title: 'Mission', body: 'The mission of Learnito is to make studying faster, easier, and more useful for students on phone, tablet, laptop, and desktop.' },
+      { title: 'Offline-first study', body: 'Learnito supports offline saved notes on the same device, so students can continue revision without needing to reload everything.' }
+    ]
+  }
+};
 const ASSET_BASE = import.meta.env.BASE_URL;
 const LOGO_UI_SRC = `${ASSET_BASE}learnito-logo-small.png`;
 
@@ -284,7 +329,7 @@ function App() {
   }
 
   function navigate(nextView) {
-    const path = nextView === 'admin' ? '/admin' : nextView === 'contact' ? CONTACT_RECEIVED_PATH : '/';
+    const path = nextView === 'admin' ? '/admin' : PAGE_PATHS[nextView] || PAGE_PATHS.app;
     window.history.pushState({}, '', path);
     setView(nextView);
   }
@@ -320,6 +365,10 @@ function App() {
 
   if (view === 'contact') {
     return <ContactReceivedPage onBack={() => navigate('app')} />;
+  }
+
+  if (INFO_PAGES[view]) {
+    return <InfoPage page={INFO_PAGES[view]} onBack={() => navigate('app')} onNavigate={navigate} />;
   }
 
   return (
@@ -526,11 +575,51 @@ function App() {
           <strong>Mukilan Muthuvalathan</strong>
           <span>Founder &amp; CEO, Learnito</span>
         </div>
-        <button className="admin-link" type="button" onClick={() => navigate('admin')}>
-          <ShieldCheck size={17} />
-          Admin
-        </button>
+        <nav className="footer-links" aria-label="Learnito pages">
+          <button type="button" onClick={() => navigate('howToUse')}>How to use</button>
+          <button type="button" onClick={() => navigate('privacyTerms')}>Privacy &amp; Terms</button>
+          <button type="button" onClick={() => navigate('about')}>About</button>
+          <button className="admin-link" type="button" onClick={() => navigate('admin')}>
+            <ShieldCheck size={17} />
+            Admin
+          </button>
+        </nav>
       </footer>
+    </main>
+  );
+}
+
+function InfoPage({ onBack, onNavigate, page }) {
+  return (
+    <main className="info-page">
+      <section className="info-shell">
+        <header className="info-header">
+          <div className="brand-heading">
+            <img src={LOGO_UI_SRC} alt="Learnito AI logo" width="82" height="82" decoding="async" />
+            <div>
+              <p className="eyebrow">{page.eyebrow}</p>
+              <h1>{page.title}</h1>
+            </div>
+          </div>
+          <button className="secondary-link" type="button" onClick={onBack}>Back to app</button>
+        </header>
+
+        <p className="info-intro">{page.intro}</p>
+
+        <div className="info-grid">
+          {page.sections.map((section) => (
+            <article className="info-card" key={section.title}>
+              <h2>{section.title}</h2>
+              <p>{section.body}</p>
+            </article>
+          ))}
+        </div>
+
+        <div className="info-actions">
+          <button type="button" onClick={onBack}>Start using Learnito</button>
+          <button className="secondary-info-button" type="button" onClick={() => onNavigate('contact')}>Contact support</button>
+        </div>
+      </section>
     </main>
   );
 }
@@ -562,7 +651,10 @@ function ContactReceivedPage({ onBack }) {
 
 function getViewFromPath() {
   if (window.location.pathname === '/admin') return 'admin';
-  if (window.location.pathname === CONTACT_RECEIVED_PATH) return 'contact';
+  if (window.location.pathname === PAGE_PATHS.contact) return 'contact';
+  if (window.location.pathname === PAGE_PATHS.howToUse) return 'howToUse';
+  if (window.location.pathname === PAGE_PATHS.privacyTerms) return 'privacyTerms';
+  if (window.location.pathname === PAGE_PATHS.about) return 'about';
   return 'app';
 }
 function AdminPanel({ onBack, onUsageChange }) {
@@ -885,4 +977,3 @@ function createNoteId() {
 }
 
 createRoot(document.getElementById('root')).render(<App />);
-
