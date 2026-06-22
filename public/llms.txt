@@ -1,29 +1,48 @@
 # Learnito AI Study Notes Generator
 
-Learnito AI is an educational Progressive Web App at https://learnitoai.in/.
+Learnito AI is an educational Progressive Web App at https://learnitoai.in/ for students who want faster revision.
 
-## Purpose
-Students paste lecture notes, textbook content, or revision material. The app generates:
-- Exact key summary bullet points from the study material
-- Important concepts
-- Practice quiz questions with short, easy answers
-- Offline saved notes using local browser storage
+## What the App Does
+- Turns pasted lecture notes, textbook content, or study material into exact key bullet summaries.
+- Highlights important concepts from the source material.
+- Generates practice quiz questions with short, easy answers.
+- Saves notes offline on the same device with IndexedDB.
+- Supports 10 free note generations per month.
+- Premium unlocks unlimited note generation for 28 days on one activated device ID.
 
-## Main User Task
-To generate study notes, open https://learnitoai.in/, paste study material into the Study material box, add a note title if needed, then press Generate. Use Save offline to store the note on the same device.
+## Main User Flow
+1. Open https://learnitoai.in/.
+2. Paste study material into the Study material box.
+3. Press Generate.
+4. Review the key summary, important concepts, and practice quiz.
+5. Press Save offline to keep the note on the current device.
 
-## Free and Premium Access
-Free users can generate 10 notes per month. Premium access unlocks unlimited generation for 28 days on the activated device. The app shows the device ID so the user can copy it and request activation.
-
-## Important URLs
+## Important Public URLs
 - Home app: https://learnitoai.in/
-- Admin page: https://learnitoai.in/admin
+- About: https://learnitoai.in/about
+- How to use: https://learnitoai.in/how-to-use
+- Premium: https://learnitoai.in/premium
+- Blog: https://learnitoai.in/blog
+- AI Study Notes Generator: https://learnitoai.in/ai-study-notes-generator
+- Practice Quiz Generator: https://learnitoai.in/practice-quiz-generator
+- Notes Summarizer for Students: https://learnitoai.in/notes-summarizer-for-students
+- Privacy Policy: https://learnitoai.in/privacy-policy
+- Terms and Conditions: https://learnitoai.in/terms-and-conditions
 - Sitemap: https://learnitoai.in/sitemap.xml
 - Robots: https://learnitoai.in/robots.txt
 - PWA manifest: https://learnitoai.in/manifest.webmanifest
 
-## Publisher
-Founder and CEO: Mukilan Muthuvalathan, Learnito.
+## Private URL
+- Admin page: https://learnitoai.in/admin
 
-## Agent Guidance
-The app is safe to browse. Do not enter private study material unless the user asks you to. Do not activate premium, open WhatsApp payment, or submit admin actions unless the user explicitly requests that action.
+## Publisher
+Founder and CEO: Mukilan Muthuvalathan, Learnito AI.
+
+## Safety and Agent Guidance
+The website is safe to browse. Do not enter private study material unless the user asks you to. Do not open WhatsApp, request premium, copy device IDs, or submit admin actions unless the user explicitly asks for that action.
+
+## Best Tasks for Agents
+- Explain how Learnito AI works.
+- Help users find the right page.
+- Summarize the privacy policy or terms.
+- Guide users to the WhatsApp feedback or premium button when requested.

@@ -38,6 +38,7 @@ const SHARE_URL = 'https://learnitoai.in/';
 const SHARE_TEXT = 'Try Learnito AI Study Notes Generator: summaries, concepts, and quiz questions from study material.';
 const CONTACT_RECEIVED_PATH = '/contact-received';
 const PAGE_PATHS = {
+  admin: '/admin',
   about: '/about',
   app: '/',
   contact: CONTACT_RECEIVED_PATH,
@@ -50,6 +51,60 @@ const PAGE_PATHS = {
   privacyTerms: '/privacy-policy-terms',
   termsConditions: '/terms-and-conditions',
   blog: '/blog'
+};
+const PAGE_META = {
+  app: {
+    title: 'Learnito AI Study Notes Generator',
+    description: 'Generate exact key summaries, important concepts, and practice quiz questions from study material. Save notes offline with Learnito AI.'
+  },
+  about: {
+    title: 'About Learnito AI',
+    description: 'Learn about Learnito AI, founded by Mukilan Muthuvalathan to help students create smarter notes, summaries, and quizzes.'
+  },
+  howToUse: {
+    title: 'How to Use Learnito AI',
+    description: 'Learn how to paste notes, generate summaries, practice quiz questions, and save study notes offline in Learnito AI.'
+  },
+  privacyPolicy: {
+    title: 'Learnito AI Privacy Policy',
+    description: 'Read the Learnito AI privacy policy covering saved notes, analytics, cookies, and student-friendly data protection.'
+  },
+  termsConditions: {
+    title: 'Learnito AI Terms and Conditions',
+    description: 'Read Learnito AI terms for educational use, user responsibilities, premium access, payments, and liability limits.'
+  },
+  premium: {
+    title: 'Learnito AI Premium Access',
+    description: 'Learnito AI premium gives unlimited note generation for 28 days after admin activation by device ID.'
+  },
+  blog: {
+    title: 'Learnito AI Blog for Students',
+    description: 'Study tips and SEO pages for AI study notes, practice quiz generation, and notes summarizing for students.'
+  },
+  aiStudyNotes: {
+    title: 'AI Study Notes Generator',
+    description: 'Use Learnito AI to convert study material into exact bullet notes, important concepts, and practice questions.'
+  },
+  practiceQuiz: {
+    title: 'Practice Quiz Generator for Students',
+    description: 'Generate practice quiz questions with short, simple answers from your study material using Learnito AI.'
+  },
+  notesSummarizer: {
+    title: 'Notes Summarizer for Students',
+    description: 'Summarize lecture notes and textbook content into short exact bullet points for faster revision with Learnito AI.'
+  },
+  privacyTerms: {
+    title: 'Learnito AI Privacy Policy and Terms',
+    description: 'Simple student-friendly privacy and terms for using Learnito AI study notes generator.'
+  },
+  contact: {
+    title: 'Learnito AI Contact Received',
+    description: 'Learnito AI contact and premium request confirmation page.'
+  },
+  admin: {
+    title: 'Learnito AI Admin',
+    description: 'Private Learnito AI admin panel.'
+  }
 };
 const INFO_PAGES = {
   howToUse: {
@@ -188,19 +243,40 @@ function loadAnalyticsWhenReady() {
     document.head.appendChild(script);
   };
 
-  const schedule = () => {
-    if ('requestIdleCallback' in window) {
-      window.requestIdleCallback(loadAnalytics, { timeout: 8000 });
-      return;
-    }
-
-    window.setTimeout(loadAnalytics, 8000);
+  let fallbackTimer;
+  const interactionEvents = ['pointerdown', 'keydown', 'touchstart'];
+  const cleanup = () => {
+    interactionEvents.forEach((eventName) => {
+      window.removeEventListener(eventName, loadOnce);
+    });
+    window.clearTimeout(fallbackTimer);
   };
 
-  if (document.readyState === 'complete') {
-    schedule();
-  } else {
-    window.addEventListener('load', schedule, { once: true });
+  const loadOnce = () => {
+    cleanup();
+    loadAnalytics();
+  };
+
+  interactionEvents.forEach((eventName) => {
+    window.addEventListener(eventName, loadOnce, { once: true, passive: true });
+  });
+  fallbackTimer = window.setTimeout(loadOnce, 20000);
+}
+
+function updatePageMeta(view) {
+  if (typeof document === 'undefined') return;
+
+  const meta = PAGE_META[view] || PAGE_META.app;
+  document.title = meta.title;
+
+  const description = document.querySelector('meta[name="description"]');
+  if (description) {
+    description.setAttribute('content', meta.description);
+  }
+
+  const canonical = document.querySelector('link[rel="canonical"]');
+  if (canonical) {
+    canonical.setAttribute('href', `https://learnitoai.in${PAGE_PATHS[view] || '/'}`);
   }
 }
 
@@ -232,13 +308,25 @@ function App() {
     setUsage(getUsageStatus());
     handlePremiumActivationLink(currentDeviceId);
 
-    getNotes().then((storedNotes) => {
-      setNotes(storedNotes);
-      if (storedNotes[0]) {
-        openNote(storedNotes[0]);
-      }
-    });
+    const loadSavedNotes = () => {
+      getNotes().then((storedNotes) => {
+        setNotes(storedNotes);
+        if (storedNotes[0]) {
+          openNote(storedNotes[0]);
+        }
+      });
+    };
+
+    if ('requestIdleCallback' in window) {
+      window.requestIdleCallback(loadSavedNotes, { timeout: 2500 });
+    } else {
+      window.setTimeout(loadSavedNotes, 900);
+    }
   }, []);
+
+  useEffect(() => {
+    updatePageMeta(view);
+  }, [view]);
 
   useEffect(() => {
     function handlePopState() {

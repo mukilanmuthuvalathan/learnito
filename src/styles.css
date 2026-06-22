@@ -74,7 +74,7 @@ button {
 }
 
 .eyebrow {
-  color: #10B981;
+  color: #047857;
   font-size: 0.76rem;
   font-weight: 800;
   letter-spacing: 0.08em;
@@ -251,8 +251,8 @@ textarea {
 
 input:focus,
 textarea:focus {
-  border-color: #10B981;
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.14);
+  border-color: #047857;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.22);
 }
 
 textarea {
@@ -270,7 +270,7 @@ textarea {
 .actions button,
 .icon-button {
   align-items: center;
-  background: #10B981;
+  background: #047857;
   border-radius: 16px;
   color: #ffffff;
   display: inline-flex;
@@ -343,7 +343,7 @@ textarea {
 .limit-premium-form button,
 .limit-device-box button {
   align-items: center;
-  background: #10B981;
+  background: #047857;
   border-radius: 16px;
   color: #ffffff;
   display: inline-flex;
@@ -481,7 +481,7 @@ textarea {
 }
 
 .info-actions button {
-  background: #10B981;
+  background: #047857;
   border-radius: 16px;
   color: #ffffff;
   font-weight: 800;
@@ -504,7 +504,7 @@ textarea {
 }
 
 .empty-state svg {
-  color: #10B981;
+  color: #047857;
 }
 
 .study-guide {
@@ -529,7 +529,7 @@ textarea {
 }
 
 .guide-section h2 svg {
-  color: #10B981;
+  color: #047857;
 }
 
 li {
@@ -624,7 +624,7 @@ li p {
 .device-box button,
 .premium-access-button {
   align-items: center;
-  background: #10B981;
+  background: #047857;
   border-radius: 16px;
   color: #ffffff;
   display: inline-flex;
@@ -635,7 +635,7 @@ li p {
 
 .premium-access-button {
   border: 2px solid #059669;
-  box-shadow: 0 10px 22px rgba(37, 99, 235, 0.22);
+  box-shadow: 0 10px 22px rgba(4, 120, 87, 0.22);
   margin-top: 12px;
   min-height: 44px;
   text-decoration: none;
@@ -843,7 +843,7 @@ li p {
 }
 
 .admin-login-card svg {
-  color: #10B981;
+  color: #047857;
 }
 
 .admin-login-card h2 {
@@ -854,7 +854,7 @@ li p {
 .admin-actions button,
 .admin-login-card button {
   align-items: center;
-  background: #10B981;
+  background: #047857;
   border-radius: 16px;
   color: #ffffff;
   display: inline-flex;
@@ -1003,7 +1003,7 @@ li p {
 }
 
 .note-card.active {
-  border-color: #10B981;
+  border-color: #047857;
 }
 
 .note-card button {
@@ -1366,7 +1366,7 @@ li p {
 .share-options button,
 .roadmap-whatsapp {
   align-items: center;
-  background: #10B981;
+  background: #047857;
   border-radius: 16px;
   color: #ffffff;
   display: inline-flex;
@@ -1398,7 +1398,7 @@ li p {
 
 .article-card:hover,
 .step-card:hover {
-  border-color: #10B981;
+  border-color: #047857;
   transform: translateY(-2px);
 }
 
@@ -1411,7 +1411,7 @@ li p {
 
 .share-options a {
   align-items: center;
-  background: #10B981;
+  background: #047857;
   border-radius: 16px;
   color: #ffffff;
   display: inline-flex;
@@ -1423,7 +1423,7 @@ li p {
 
 .floating-feedback {
   align-items: center;
-  background: #10B981;
+  background: #047857;
   border-radius: 999px;
   bottom: 20px;
   box-shadow: 0 20px 45px rgba(16, 185, 129, 0.32);
