@@ -7,10 +7,12 @@ import {
   Copy,
   Highlighter,
   MonitorDown,
+  MessageCircle,
   KeyRound,
   Loader2,
   Plus,
   Save,
+  Share2,
   ShieldCheck,
   Sparkles,
   Trash2
@@ -33,12 +35,17 @@ const sampleText =
 const ADMIN_PASSWORD = 'Mukilan@2009';
 const ADMIN_SESSION_KEY = 'learnito_admin_password';
 const WHATSAPP_PREMIUM_LINK = 'https://wa.me/message/6FSCTMUBFVESK1?src=qr';
+const SHARE_URL = 'https://learnitoai.in/';
+const SHARE_TEXT = 'Try Learnito AI Study Notes Generator: summaries, concepts, and quiz questions from study material.';
 const CONTACT_RECEIVED_PATH = '/contact-received';
 const PAGE_PATHS = {
   about: '/about',
   app: '/',
   contact: CONTACT_RECEIVED_PATH,
+  aiStudyNotes: '/ai-study-notes-generator',
   howToUse: '/how-to-use',
+  notesSummarizer: '/notes-summarizer-for-students',
+  practiceQuiz: '/practice-quiz-generator',
   privacyTerms: '/privacy-policy-terms'
 };
 const INFO_PAGES = {
@@ -76,6 +83,39 @@ const INFO_PAGES = {
       { title: 'Founder', body: 'Learnito was founded by Mukilan Muthuvalathan, Founder and CEO of Learnito.' },
       { title: 'Mission', body: 'The mission of Learnito is to make studying faster, easier, and more useful for students on phone, tablet, laptop, and desktop.' },
       { title: 'Offline-first study', body: 'Learnito supports offline saved notes on the same device, so students can continue revision without needing to reload everything.' }
+    ]
+  },
+  aiStudyNotes: {
+    eyebrow: 'SEO guide',
+    title: 'AI Study Notes Generator',
+    intro: 'Learnito AI helps students convert long study material into clear notes for faster revision.',
+    sections: [
+      { title: 'Generate notes from any subject', body: 'Paste textbook content, lecture notes, class notes, or revision material and get structured study notes in seconds.' },
+      { title: 'Exact key summaries', body: 'Learnito focuses on exact bullet points from the source material, so the summary stays useful and easy to revise.' },
+      { title: 'Important concepts', body: 'The app highlights key terms and concepts that students should remember before exams.' },
+      { title: 'Offline saved notes', body: 'Saved notes stay available on the same device, helping students continue revision even without internet.' }
+    ]
+  },
+  practiceQuiz: {
+    eyebrow: 'SEO guide',
+    title: 'Practice Quiz Generator',
+    intro: 'Learnito creates practice quiz questions from study material with short, easy answers for quick learning.',
+    sections: [
+      { title: 'Questions from your notes', body: 'The quiz is based on the content students paste, so practice stays connected to the exact chapter or topic.' },
+      { title: 'Short answers', body: 'Answers are written in simple points so students can understand quickly and revise faster.' },
+      { title: 'Useful for exam revision', body: 'Practice questions help students check what they remember and find weak areas before tests.' },
+      { title: 'Up to 50 questions', body: 'For longer study material, Learnito can create more practice questions to support deeper preparation.' }
+    ]
+  },
+  notesSummarizer: {
+    eyebrow: 'SEO guide',
+    title: 'Notes Summarizer for Students',
+    intro: 'Learnito summarizes study material into clean bullet points so students can revise without reading everything again.',
+    sections: [
+      { title: 'Student-friendly summaries', body: 'The key summary is short, direct, and based on the pasted material.' },
+      { title: 'Less reading, better revision', body: 'Students can use the summary to review important ideas faster before class, homework, or exams.' },
+      { title: 'Works with lecture notes', body: 'Paste classroom notes, textbook paragraphs, or revision content and turn them into a study-ready format.' },
+      { title: 'Save for offline study', body: 'Generated notes can be saved locally, making Learnito useful for daily revision.' }
     ]
   }
 };
@@ -371,6 +411,31 @@ function App() {
     setView(nextView);
   }
 
+  async function shareLearnito() {
+    const shareData = {
+      text: SHARE_TEXT,
+      title: 'Learnito AI Study Notes Generator',
+      url: SHARE_URL
+    };
+
+    try {
+      if (navigator.share) {
+        await navigator.share(shareData);
+        setStatus('Share opened');
+        return;
+      }
+
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(SHARE_URL);
+      } else {
+        fallbackCopy(SHARE_URL);
+      }
+      setStatus('Learnito link copied');
+    } catch {
+      fallbackCopy(SHARE_URL);
+      setStatus('Learnito link copied');
+    }
+  }
   async function installApp() {
     if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone) {
       setStatus('Learnito app is already installed');
@@ -427,6 +492,14 @@ function App() {
             </div>
           </div>
           <div className="topbar-actions">
+            <button className="utility-button" type="button" onClick={shareLearnito}>
+              <Share2 size={17} />
+              Share
+            </button>
+            <a className="utility-button" href={WHATSAPP_PREMIUM_LINK} rel="noreferrer" target="_blank">
+              <MessageCircle size={17} />
+              Feedback
+            </a>
             <button
               aria-label="Install Learnito app"
               className="install-button"
@@ -510,9 +583,17 @@ function App() {
           <h2>{usage.premiumActive ? 'Premium active' : 'Premium access'}</h2>
           <p className="muted">
             {usage.premiumActive
-              ? 'Premium active on this device.'
-              : `${usage.count}/${usage.limit} free generated notes used this month.`}
+              ? 'Premium active on this device. Unlimited note generation is available for 28 days from activation.'
+              : `${usage.count}/${usage.limit} free generated notes used this month. Free users get 10 notes per month.`}
           </p>
+          {!usage.premiumActive && (
+            <ul className="premium-benefits">
+              <li>10 free notes every month</li>
+              <li>Premium gives unlimited notes for 28 days</li>
+              <li>WhatsApp payment and activation support</li>
+              <li>Safe and secure payment guidance</li>
+            </ul>
+          )}
 
           {message && <p className="premium-message" role="status" aria-live="polite">{message}</p>}
           {error && <p className="limit-alert" role="alert">{error}</p>}
@@ -614,6 +695,9 @@ function App() {
         </div>
         <nav className="footer-links" aria-label="Learnito pages">
           <button type="button" onClick={() => navigate('howToUse')}>How to use</button>
+          <button type="button" onClick={() => navigate('aiStudyNotes')}>AI Study Notes</button>
+          <button type="button" onClick={() => navigate('practiceQuiz')}>Practice Quiz</button>
+          <button type="button" onClick={() => navigate('notesSummarizer')}>Notes Summarizer</button>
           <button type="button" onClick={() => navigate('privacyTerms')}>Privacy &amp; Terms</button>
           <button type="button" onClick={() => navigate('about')}>About</button>
           <button className="admin-link" type="button" onClick={() => navigate('admin')}>
@@ -689,7 +773,10 @@ function ContactReceivedPage({ onBack }) {
 function getViewFromPath() {
   if (window.location.pathname === '/admin') return 'admin';
   if (window.location.pathname === PAGE_PATHS.contact) return 'contact';
+  if (window.location.pathname === PAGE_PATHS.aiStudyNotes) return 'aiStudyNotes';
   if (window.location.pathname === PAGE_PATHS.howToUse) return 'howToUse';
+  if (window.location.pathname === PAGE_PATHS.notesSummarizer) return 'notesSummarizer';
+  if (window.location.pathname === PAGE_PATHS.practiceQuiz) return 'practiceQuiz';
   if (window.location.pathname === PAGE_PATHS.privacyTerms) return 'privacyTerms';
   if (window.location.pathname === PAGE_PATHS.about) return 'about';
   return 'app';

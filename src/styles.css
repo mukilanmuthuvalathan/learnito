@@ -111,6 +111,51 @@ h2 {
   white-space: nowrap;
 }
 
+.utility-button {
+  align-items: center;
+  background: #e0f2fe;
+  border: 1px solid #bae6fd;
+  border-radius: 8px;
+  color: #075985;
+  display: inline-flex;
+  font-weight: 800;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 14px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.utility-button:hover {
+  background: #bae6fd;
+}
+
+.premium-benefits {
+  background: #ffffff;
+  border: 1px solid #bfdbfe;
+  border-radius: 8px;
+  color: #1e3a8a;
+  display: grid;
+  gap: 8px;
+  font-size: 0.9rem;
+  font-weight: 800;
+  list-style: none;
+  margin: 14px 0 0;
+  padding: 12px;
+}
+
+.premium-benefits li {
+  margin: 0;
+  padding-left: 18px;
+  position: relative;
+}
+
+.premium-benefits li::before {
+  color: #16a34a;
+  content: "+";
+  left: 0;
+  position: absolute;
+}
 .install-button {
   align-items: center;
   background: #0f172a;
@@ -1079,6 +1124,7 @@ li p {
   }
 
   .topbar-actions,
+  .utility-button,
   .install-button,
   .install-help {
     width: 100%;
