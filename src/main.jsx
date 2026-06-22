@@ -733,6 +733,11 @@ function App() {
           <strong>Mukilan Muthuvalathan</strong>
           <span>Founder &amp; CEO, Learnito</span>
         </div>
+        <nav className="footer-links" aria-label="Learnito pages">
+          <button type="button" onClick={() => navigate('about')}>About</button>
+          <button type="button" onClick={() => navigate('howToUse')}>How to Use</button>
+          <button type="button" onClick={() => navigate('privacyTerms')}>Privacy Policy + Terms</button>
+        </nav>
       </footer>
       </main>
     </>
