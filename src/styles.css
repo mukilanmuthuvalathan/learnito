@@ -86,7 +86,8 @@ button {
   min-width: 0;
 }
 
-.brand-heading img {
+.brand-heading img,
+.brand-mark {
   border-radius: 16px;
   height: 82px;
   object-fit: contain;
@@ -1139,7 +1140,8 @@ li p {
     align-items: flex-start;
   }
 
-  .brand-heading img {
+  .brand-heading img,
+  .brand-mark {
     height: 58px;
     width: 58px;
   }

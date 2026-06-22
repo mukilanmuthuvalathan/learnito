@@ -215,8 +215,27 @@ const INFO_PAGES = {
   }
 };
 const ASSET_BASE = import.meta.env.BASE_URL;
-const LOGO_UI_SRC = `${ASSET_BASE}learnito-logo-small.png`;
 const GA_MEASUREMENT_ID = 'G-5V26Y64H1J';
+
+function LearnitoMark({ className = 'brand-mark', priority = false }) {
+  return (
+    <svg
+      aria-label="Learnito AI logo"
+      className={className}
+      role="img"
+      viewBox="0 0 512 512"
+      width="82"
+      height="82"
+      focusable="false"
+      data-priority={priority ? 'true' : undefined}
+    >
+      <rect width="512" height="512" rx="104" fill="#047857" />
+      <path fill="#fff" d="M145 118h171c34 0 61 27 61 61v231c0 8-9 13-16 9l-34-21c-10-6-22-9-34-9H145c-20 0-36-16-36-36V154c0-20 16-36 36-36Z" />
+      <path fill="#bbf7d0" d="M177 193h165v28H177zm0 68h128v28H177zm0 68h88v28h-88z" />
+      <path fill="#10b981" d="m352 111 12 33 33 12-33 12-12 33-12-33-33-12 33-12z" />
+    </svg>
+  );
+}
 
 function loadStudyAi() {
   return import('./studyAi.js');
@@ -646,14 +665,8 @@ function App() {
       <section className="workspace">
         <header className="topbar">
           <div className="brand-heading">
-            <img
-              src={LOGO_UI_SRC}
-              alt="Learnito AI logo"
-              width="82"
-              height="82"
-              decoding="async"
-              fetchPriority="high"
-            />
+            <LearnitoMark priority />
+
             <div>
               <p className="eyebrow">PWA Study Tool</p>
               <h1>Learnito AI Study Notes Generator</h1>
@@ -909,7 +922,7 @@ function RoadmapSections({ onNavigate, onShare }) {
           <h2>About Learnito AI</h2>
           <p>Learnito AI helps students create notes, summaries, and quizzes using AI to make studying easier and smarter.</p>
           <div className="founder-profile">
-            <img src={LOGO_UI_SRC} alt="Learnito AI founder card logo" width="82" height="82" loading="lazy" decoding="async" />
+            <LearnitoMark className="brand-mark founder-mark" />
             <div>
               <strong>Mukilan Muthuvalathan</strong>
               <span>Founder &amp; CEO, Learnito AI</span>
@@ -994,7 +1007,7 @@ function InfoPage({ onBack, onNavigate, page }) {
       <section className="info-shell">
         <header className="info-header">
           <div className="brand-heading">
-            <img src={LOGO_UI_SRC} alt="Learnito AI logo" width="82" height="82" decoding="async" />
+            <LearnitoMark />
             <div>
               <p className="eyebrow">{page.eyebrow}</p>
               <h1>{page.title}</h1>
@@ -1027,13 +1040,7 @@ function ContactReceivedPage({ onBack }) {
   return (
     <main className="contact-page">
       <section className="contact-card">
-        <img
-          src={LOGO_UI_SRC}
-          alt="Learnito AI logo"
-          width="82"
-          height="82"
-          decoding="async"
-        />
+        <LearnitoMark />
         <p className="eyebrow">Contact received</p>
         <h1>Thank you for contacting Learnito</h1>
         <p>
