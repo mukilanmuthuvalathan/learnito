@@ -13,7 +13,6 @@ import {
   Plus,
   Save,
   Share2,
-  ShieldCheck,
   Sparkles,
   Trash2
 } from 'lucide-react';
@@ -46,7 +45,11 @@ const PAGE_PATHS = {
   howToUse: '/how-to-use',
   notesSummarizer: '/notes-summarizer-for-students',
   practiceQuiz: '/practice-quiz-generator',
-  privacyTerms: '/privacy-policy-terms'
+  premium: '/premium',
+  privacyPolicy: '/privacy-policy',
+  privacyTerms: '/privacy-policy-terms',
+  termsConditions: '/terms-and-conditions',
+  blog: '/blog'
 };
 const INFO_PAGES = {
   howToUse: {
@@ -116,6 +119,49 @@ const INFO_PAGES = {
       { title: 'Less reading, better revision', body: 'Students can use the summary to review important ideas faster before class, homework, or exams.' },
       { title: 'Works with lecture notes', body: 'Paste classroom notes, textbook paragraphs, or revision content and turn them into a study-ready format.' },
       { title: 'Save for offline study', body: 'Generated notes can be saved locally, making Learnito useful for daily revision.' }
+    ]
+  },
+  privacyPolicy: {
+    eyebrow: 'Privacy Policy',
+    title: 'Privacy Policy',
+    intro: 'Learnito AI explains privacy in simple student-friendly language so users know how their study data is handled.',
+    sections: [
+      { title: 'Data collection', body: 'Learnito stores saved notes locally on your device. Your offline notes are kept in your browser storage, not in a public account.' },
+      { title: 'Cookies and local storage', body: 'The app uses browser storage for saved notes, device ID, monthly usage count, premium status, and app settings.' },
+      { title: 'Analytics', body: 'Learnito may use Google Analytics to understand visits and improve the website. Analytics is loaded after the page is usable for better performance.' },
+      { title: 'Privacy protection', body: 'Do not paste private or sensitive information. Learnito is designed for educational study material, notes, summaries, and quizzes.' }
+    ]
+  },
+  termsConditions: {
+    eyebrow: 'Terms & Conditions',
+    title: 'Terms & Conditions',
+    intro: 'These terms keep Learnito AI safe, useful, and focused on education.',
+    sections: [
+      { title: 'Educational use only', body: 'Learnito AI is a study helper for notes, summaries, and practice questions. It should be used for learning and revision.' },
+      { title: 'User responsibilities', body: 'Users are responsible for the content they paste and should review generated answers before using them for exams or homework.' },
+      { title: 'Premium payment terms', body: 'Free users get 10 note generations per month. Premium gives unlimited note generation for 28 days after activation on one device.' },
+      { title: 'Limitation of liability', body: 'Learnito AI is provided as a learning aid. We are not responsible for mistakes, exam results, or decisions made from generated content.' }
+    ]
+  },
+  premium: {
+    eyebrow: 'Premium',
+    title: 'Learnito AI Premium',
+    intro: 'Premium is simple: 10 free notes per month, then unlimited note generation for 28 days after activation.',
+    sections: [
+      { title: 'Free plan', body: 'Every device can generate 10 free notes each month.' },
+      { title: 'Premium access', body: 'Premium unlocks unlimited note generation for 28 days on the activated device ID.' },
+      { title: 'WhatsApp payment', body: 'Premium support and payment guidance happen through WhatsApp for a simple and safe activation process.' },
+      { title: 'Safe and secure', body: 'Send your device ID only through the official Access Premium WhatsApp button shown in the app.' }
+    ]
+  },
+  blog: {
+    eyebrow: 'Blog / SEO',
+    title: 'Learnito AI Blog',
+    intro: 'Study tips and SEO pages for students who want faster revision with AI.',
+    sections: [
+      { title: 'AI Study Notes Generator', body: 'Learn how AI can turn long study material into clear revision notes.' },
+      { title: 'Practice Quiz Generator', body: 'Use practice quizzes to test memory and prepare before exams.' },
+      { title: 'Notes Summarizer for Students', body: 'Summarize class notes and textbook content into student-friendly bullet points.' }
     ]
   }
 };
@@ -688,25 +734,133 @@ function App() {
           )}
         </div>
       </aside>
+      <RoadmapSections onNavigate={navigate} onShare={shareLearnito} />
+
+      <a className="floating-feedback" href={WHATSAPP_PREMIUM_LINK} rel="noreferrer" target="_blank">
+        <MessageCircle size={18} />
+        Send Feedback
+      </a>
       <footer className="app-footer">
         <div>
           <strong>Mukilan Muthuvalathan</strong>
           <span>Founder &amp; CEO, Learnito</span>
         </div>
         <nav className="footer-links" aria-label="Learnito pages">
-          <button type="button" onClick={() => navigate('howToUse')}>How to use</button>
-          <button type="button" onClick={() => navigate('aiStudyNotes')}>AI Study Notes</button>
-          <button type="button" onClick={() => navigate('practiceQuiz')}>Practice Quiz</button>
-          <button type="button" onClick={() => navigate('notesSummarizer')}>Notes Summarizer</button>
-          <button type="button" onClick={() => navigate('privacyTerms')}>Privacy &amp; Terms</button>
-          <button type="button" onClick={() => navigate('about')}>About</button>
-          <button className="admin-link" type="button" onClick={() => navigate('admin')}>
-            <ShieldCheck size={17} />
-            Admin
-          </button>
+          <button type="button" onClick={() => navigate('app')}>Home</button>
+          <button type="button" onClick={() => navigate('app')}>Features</button>
+          <button type="button" onClick={() => navigate('howToUse')}>How to Use</button>
+          <button type="button" onClick={() => navigate('premium')}>Premium</button>
+          <button type="button" onClick={() => navigate('blog')}>Blog</button>
+          <button type="button" onClick={() => navigate('privacyPolicy')}>Privacy Policy</button>
+          <button type="button" onClick={() => navigate('termsConditions')}>Terms &amp; Conditions</button>
+          <button type="button" onClick={() => navigate('contact')}>Contact Us</button>
         </nav>
       </footer>
     </main>
+  );
+}
+
+function RoadmapSections({ onNavigate, onShare }) {
+  return (
+    <section className="roadmap-section" aria-label="Learnito AI roadmap pages">
+      <div className="roadmap-shell">
+        <article className="roadmap-card roadmap-priority">
+          <p className="eyebrow">Recommended Order</p>
+          <h2>Learnito AI Roadmap</h2>
+          <div className="roadmap-list">
+            {ROADMAP_ITEMS.map((item, index) => (
+              <div className="roadmap-list-item" key={item.text}>
+                <span style={{ backgroundColor: item.color }}>{index + 1}</span>
+                <div>
+                  <strong>{item.text}</strong>
+                  <small>{item.detail}</small>
+                </div>
+              </div>
+            ))}
+          </div>
+        </article>
+
+        <article className="roadmap-card founder-card">
+          <p className="eyebrow">About Page</p>
+          <h2>About Learnito AI</h2>
+          <p>Learnito AI helps students create notes, summaries, and quizzes using AI to make studying easier and smarter.</p>
+          <div className="founder-profile">
+            <img src={LOGO_UI_SRC} alt="Learnito AI founder card logo" width="82" height="82" />
+            <div>
+              <strong>Mukilan Muthuvalathan</strong>
+              <span>Founder &amp; CEO, Learnito AI</span>
+            </div>
+          </div>
+        </article>
+
+        <article className="roadmap-card policy-card">
+          <p className="eyebrow">Privacy Policy</p>
+          <h2>Student-friendly privacy</h2>
+          <p>Explains local saved notes, cookies, analytics, and privacy protection in simple language.</p>
+          <button type="button" onClick={() => onNavigate('privacyPolicy')}>Read Privacy Policy</button>
+        </article>
+
+        <article className="roadmap-card policy-card">
+          <p className="eyebrow">Terms &amp; Conditions</p>
+          <h2>Educational use only</h2>
+          <p>Covers user responsibilities, premium payment terms, and limitation of liability.</p>
+          <button type="button" onClick={() => onNavigate('termsConditions')}>Read Terms</button>
+        </article>
+
+        <article className="roadmap-card how-card">
+          <p className="eyebrow">How to Use</p>
+          <h2>Learn in 4 simple steps</h2>
+          <div className="step-grid">
+            {HOW_TO_STEPS.map((step) => (
+              <div className="step-card" key={step.title}>
+                <strong>{step.title}</strong>
+                <span>{step.body}</span>
+              </div>
+            ))}
+          </div>
+        </article>
+
+        <article className="roadmap-card premium-roadmap-card">
+          <p className="eyebrow">Premium Page</p>
+          <h2>Upgrade with trust</h2>
+          <p>10 free notes per month. Premium gives unlimited notes for 28 days with WhatsApp payment and safe activation support.</p>
+          <button type="button" onClick={() => onNavigate('premium')}>View Premium</button>
+        </article>
+
+        <article className="roadmap-card blog-roadmap-card">
+          <p className="eyebrow">Blog / SEO Pages</p>
+          <h2>Student search pages</h2>
+          <div className="blog-card-grid">
+            {BLOG_CARDS.map((card) => (
+              <button type="button" className="article-card" key={card.title} onClick={() => onNavigate(card.view)}>
+                <strong>{card.title}</strong>
+                <span>{card.body}</span>
+              </button>
+            ))}
+          </div>
+        </article>
+
+        <article className="roadmap-card feedback-roadmap-card">
+          <p className="eyebrow">Feedback</p>
+          <h2>We would love to hear from you</h2>
+          <p>Found a bug or suggestion? Send it to us on WhatsApp.</p>
+          <a className="roadmap-whatsapp" href={WHATSAPP_PREMIUM_LINK} rel="noreferrer" target="_blank">
+            <MessageCircle size={18} />
+            Chat on WhatsApp
+          </a>
+        </article>
+
+        <article className="roadmap-card share-roadmap-card">
+          <p className="eyebrow">Share Button</p>
+          <h2>Share Learnito AI</h2>
+          <p>Help more students discover smarter study notes.</p>
+          <div className="share-options">
+            <a href={`https://wa.me/?text=${encodeURIComponent(`${SHARE_TEXT} ${SHARE_URL}`)}`} rel="noreferrer" target="_blank">WhatsApp</a>
+            <button type="button" onClick={onShare}>Copy Link / Native Share</button>
+          </div>
+        </article>
+      </div>
+    </section>
   );
 }
 
@@ -777,7 +931,11 @@ function getViewFromPath() {
   if (window.location.pathname === PAGE_PATHS.howToUse) return 'howToUse';
   if (window.location.pathname === PAGE_PATHS.notesSummarizer) return 'notesSummarizer';
   if (window.location.pathname === PAGE_PATHS.practiceQuiz) return 'practiceQuiz';
+  if (window.location.pathname === PAGE_PATHS.premium) return 'premium';
+  if (window.location.pathname === PAGE_PATHS.privacyPolicy) return 'privacyPolicy';
   if (window.location.pathname === PAGE_PATHS.privacyTerms) return 'privacyTerms';
+  if (window.location.pathname === PAGE_PATHS.termsConditions) return 'termsConditions';
+  if (window.location.pathname === PAGE_PATHS.blog) return 'blog';
   if (window.location.pathname === PAGE_PATHS.about) return 'about';
   return 'app';
 }
