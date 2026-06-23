@@ -176,6 +176,41 @@ h2 {
   left: 0;
   position: absolute;
 }
+
+.update-banner {
+  align-items: center;
+  background: #eff6ff;
+  border: 1px solid #93c5fd;
+  border-radius: 16px;
+  box-shadow: 0 18px 40px rgba(37, 99, 235, 0.18);
+  color: #1e3a8a;
+  display: flex;
+  font-weight: 800;
+  gap: 12px;
+  justify-content: space-between;
+  left: 50%;
+  max-width: min(560px, calc(100vw - 32px));
+  padding: 12px 14px;
+  position: fixed;
+  top: 14px;
+  transform: translateX(-50%);
+  width: 100%;
+  z-index: 120;
+}
+
+.update-banner button {
+  background: #2563eb;
+  border-radius: 12px;
+  color: #ffffff;
+  flex: 0 0 auto;
+  font-weight: 900;
+  min-height: 40px;
+  padding: 0 14px;
+}
+
+.update-banner button:hover {
+  background: #1d4ed8;
+}
 .install-button {
   align-items: center;
   background: #0f172a;

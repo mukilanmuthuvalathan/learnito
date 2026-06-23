@@ -1,5 +1,6 @@
 import React, { Suspense, lazy, useEffect, useMemo, useState } from 'react';
 import { createRoot } from 'react-dom/client';
+import { registerSW } from 'virtual:pwa-register';
 import {
   BookOpen,
   Brain,
@@ -104,6 +105,19 @@ const PAGE_META = {
 const INFO_PAGE_VIEWS = new Set(['howToUse', 'privacyTerms', 'about', 'aiStudyNotes', 'practiceQuiz', 'notesSummarizer', 'privacyPolicy', 'termsConditions', 'premium', 'blog']);
 const ASSET_BASE = import.meta.env.BASE_URL;
 const GA_MEASUREMENT_ID = 'G-5V26Y64H1J';
+const updateServiceWorker = registerSW({
+  immediate: true,
+  onNeedRefresh() {
+    window.dispatchEvent(new Event('learnito-update-ready'));
+  },
+  onRegisteredSW(_, registration) {
+    if (!registration) return;
+
+    window.setInterval(() => {
+      registration.update();
+    }, 60 * 60 * 1000);
+  }
+});
 
 function loadStudyAi() {
   return import('./studyAi.js');
@@ -184,6 +198,7 @@ function App() {
   const [installPrompt, setInstallPrompt] = useState(null);
   const [installReady, setInstallReady] = useState(false);
   const [installHelp, setInstallHelp] = useState('');
+  const [updateAvailable, setUpdateAvailable] = useState(false);
   const [view, setView] = useState(() => getViewFromPath());
   const limitReached = !usage.premiumActive && usage.count >= usage.limit;
 
@@ -247,6 +262,16 @@ function App() {
     };
   }, []);
 
+
+  useEffect(() => {
+    function handleUpdateReady() {
+      setUpdateAvailable(true);
+      setStatus('New Learnito update ready');
+    }
+
+    window.addEventListener('learnito-update-ready', handleUpdateReady);
+    return () => window.removeEventListener('learnito-update-ready', handleUpdateReady);
+  }, []);
   const wordCount = useMemo(() => {
     return sourceText.trim() ? sourceText.trim().split(/\s+/).length : 0;
   }, [sourceText]);
@@ -461,6 +486,13 @@ function App() {
       setStatus('Learnito link copied');
     }
   }
+
+  async function handleAppUpdate() {
+    setStatus('Updating Learnito...');
+    setUpdateAvailable(false);
+    await updateServiceWorker(true);
+    window.location.reload();
+  }
   async function installApp() {
     if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone) {
       setStatus('Learnito app is already installed');
@@ -513,6 +545,12 @@ function App() {
   return (
     <>
       <a className="skip-link" href="#main-content">Skip to main content</a>
+      {updateAvailable && (
+        <div className="update-banner" role="status" aria-live="polite">
+          <span>New Learnito update is ready on this device.</span>
+          <button type="button" onClick={handleAppUpdate}>Update app</button>
+        </div>
+      )}
       <main id="main-content" className="app-shell">
       <section className="workspace">
         <header className="topbar">
