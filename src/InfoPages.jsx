@@ -1,5 +1,7 @@
 import React from 'react';
 
+const SUPPORT_EMAIL = 'learnitoai@gmail.com';
+const SUPPORT_MAIL_LINK = 'mailto:learnitoai@gmail.com?subject=Learnito%20AI%20Support';
 const WHATSAPP_PREMIUM_LINK = 'https://wa.me/message/6FSCTMUBFVESK1?src=qr';
 const ASSET_BASE = import.meta.env.BASE_URL;
 
@@ -26,7 +28,7 @@ const INFO_PAGES = {
       { title: 'Device ID and premium', body: 'Learnito creates a device ID in your browser so premium access can be activated for one device. Admin activation links work only for the matching device ID.' },
       { title: 'Payments', body: 'Premium requests are handled through WhatsApp support. Always confirm payment details before paying. Premium access lasts 28 days after activation.' },
       { title: 'Terms of use', body: 'Learnito is a study helper. Users should review generated notes and answers before depending on them for exams, homework, or official work.' },
-      { title: 'Contact', body: 'For help, premium activation, or questions, use the Access Premium WhatsApp button in the app.' }
+      { title: 'Contact', body: 'For feedback and contact support, email learnitoai@gmail.com.' }
     ]
   },
   about: {
@@ -164,7 +166,7 @@ function InfoPage({ onBack, onNavigate, page }) {
 
         <div className="info-actions">
           <button type="button" onClick={onBack}>Start using Learnito</button>
-          <button className="secondary-info-button" type="button" onClick={() => onNavigate('contact')}>Contact support</button>
+          <a className="secondary-info-button" href={SUPPORT_MAIL_LINK}>Contact support</a>
         </div>
       </section>
     </main>
@@ -185,10 +187,10 @@ export function ContactReceivedPage({ onBack }) {
         <p className="eyebrow">Contact received</p>
         <h1>Thank you for contacting Learnito</h1>
         <p>
-          Your premium access request has been received. We will reply on WhatsApp with the next step.
+          For feedback or contact support, send an email to learnitoai@gmail.com.
         </p>
-        <a className="premium-access-button" href={WHATSAPP_PREMIUM_LINK} rel="noreferrer" target="_blank">
-          Continue on WhatsApp
+        <a className="premium-access-button" href={SUPPORT_MAIL_LINK}>
+          Email Learnito support
         </a>
         <button className="secondary-link" type="button" onClick={onBack}>Back to app</button>
       </section>

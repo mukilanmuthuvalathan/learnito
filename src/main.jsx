@@ -8,7 +8,7 @@ import {
   Copy,
   Highlighter,
   MonitorDown,
-  MessageCircle,
+  Mail,
   Loader2,
   Plus,
   Save,
@@ -27,6 +27,8 @@ import {
 const sampleText =
   'Photosynthesis is the process by which plants convert light energy into chemical energy. Chlorophyll absorbs sunlight, carbon dioxide enters through stomata, and water is absorbed by roots. In the chloroplasts, light-dependent reactions create ATP and NADPH, while the Calvin cycle uses carbon dioxide to produce glucose. Oxygen is released as a byproduct.';
 const WHATSAPP_PREMIUM_LINK = 'https://wa.me/message/6FSCTMUBFVESK1?src=qr';
+const SUPPORT_EMAIL = 'learnitoai@gmail.com';
+const SUPPORT_MAIL_LINK = 'mailto:learnitoai@gmail.com?subject=Learnito%20AI%20Feedback%20and%20Support';
 const SHARE_URL = 'https://learnitoai.in/';
 const SHARE_TEXT = 'Try Learnito AI Study Notes Generator: summaries, concepts, and quiz questions from study material.';
 const CONTACT_RECEIVED_PATH = '/contact-received';
@@ -574,8 +576,8 @@ function App() {
               <Share2 size={17} />
               Share
             </button>
-            <a className="utility-button" href={WHATSAPP_PREMIUM_LINK} rel="noreferrer" target="_blank">
-              <MessageCircle size={17} />
+            <a className="utility-button" href={SUPPORT_MAIL_LINK}>
+              <Mail size={17} />
               Feedback
             </a>
             <button
